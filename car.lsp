@@ -1,4 +1,3 @@
-(defun cuarto-elemnto()
-(car(cdr(cdr(cdr '(1 2 3 4 5)))))
-
+(defun cuarto-elemento (lista)
+  (car (cdr (cdr (cdr lista))))
 )
