@@ -7,3 +7,7 @@
 
 )
 
+(defun primeros-tres()
+
+)
+
