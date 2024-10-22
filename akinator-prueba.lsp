@@ -28,3 +28,5 @@
 
 (recorrer-principales *nodes*)
 
+; modificar la función para ir haciendo preguntas y recibir los datos dados por el usuario (Y/N)
+
