@@ -24,4 +24,15 @@ function potencia(x, n):
     else:
         return multi(x, potencia(x, n-1))
 
+(defun multiply (x y)
+  (if (= y 0)
+      0  ; multiplicación por 0
+      (+ x (multiply x (- y 1))))) 
+
+(defun power (x n)
+  (if (= n 0)
+      1  ; Cualquier número a la potencia 0 es 1
+      (multiply x (power x (- n 1))))) ; 
+
+
 
