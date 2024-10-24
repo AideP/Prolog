@@ -1,5 +1,3 @@
-
-
 padrede(raul, aide).
 padrede(raul, cristina).
 padrede(raul, raul_hijo).
@@ -47,3 +45,8 @@ padrede(alejandro, kenia).
 madrede(edith, alejandrito).
 madrede(edith, eleazar).
 madrede(edith, kenia).
+
+abuelos(X,Y):- (padrede(X,Z), padrede(Z,Y));(madrede(X,Z), madrede(Z,Y)).
+tio(X,Y):- (hermano(X,Z), padrede(Z,Y));(hermana(X,Z), madrede(Z,Y)).
+
+
