@@ -1,0 +1,181 @@
+                      ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                       TEMA: BIBLIOTECA Y LIBROS
+
+                                 likcos
+                      ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+Table of Contents
+─────────────────
+
+
+
+
+• Actividad: Formalizar los siguiente enunciados y generar los posibles
+  hechos y reglas en Prolog
+
+1. La Biblioteca Nacional tiene el libro "Don Quijote de la Mancha".
+
+    variables individuales: B (Biblioteca Nacional), L (Don Quijote de la mancha)
+    relación: la biblioteca tiene el libro "Don Quijote de la mancha"
+    cuantificadores lógicos:  no aplica (se habla de algo en especifico)
+    Formalizar: tiene_libro(B,L)
+    reglas o hechos:
+                    tiene_libro(biblioteca_nacional, don_quijote).
+
+2. Todos los libros en la Biblioteca Nacional están catalogados.
+
+    variables individuales: L (libros), B (biblioteca Nacional)
+    relación: Los libros de la biblioteca Nacional estan catalogados.
+    cuantificadores lógicos: ∀
+    Formalizar: ∀L(tiene_libro(B,L) → catalogado(L))
+    reglas o hechos:
+                    catalogado(L) :- tiene_libro(biblioteca_nacional, L).
+
+3. Existen libros que están en más de una biblioteca.
+
+    variables individuales: L (libro), B (biblioteca), X (otra biblioteca)
+    relación: Hay al menos un libro que esta en mas de una biblioteca
+    cuantificadores lógicos: ∃
+    Formalizar: ∃L,B,X(tiene_libro(B, L) ∧ tiene_libro(X, L) ∧ 𝐵 ≠X)
+    reglas o hechos:
+
+4. Si un libro es raro, entonces no se puede prestar.
+    
+    variables individuales: L(libro), B (biblioteca)
+    relación: Si es raro no se puede prestar.
+    cuantificadores lógicos: ∃
+    Formalizar: ∃L (tiene_libro(B,L) ∧ es_raro(L) → no_presta(L))
+    reglas o hechos:
+
+5. La Biblioteca Central tiene más de 10,000 libros.
+
+    variables individuales: B (biblioteca central), libros
+    relación: existen mas de 10,000 libros en la biblioteca central
+    cuantificadores lógicos: 
+    Formalizar: 
+    reglas o hechos:
+
+6. Todos los autores tienen al menos un libro en una biblioteca.
+
+    variables individuales: A (autores), B (biblioteca), l (Libro)
+    relación: Si eres autor tienes un libro en una biblioteca
+    cuantificadores lógicos: ∃,∀
+    Formalizar: ∀A(autor(A) → ∃𝐿 ,B(escrito_por(L, A) ∧ tiene_libro(B, L)))
+    reglas o hechos:
+
+7. Existe un autor que tiene más de 5 libros publicados.
+
+    variables individuales: A (autor), L (libro), X (libro publicados)
+    relación: Existen al menos 6 libros publicados por el mismo autor.
+    cuantificadores lógicos: ∃
+    Formalizar: ∃A(autor(A) ∧ escrito_por(L, A) → ∃L(libro(L) ∧ publicado(X,L)) )
+    reglas o hechos:
+
+8. No todos los libros de la biblioteca están en buen estado.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
+
+9. Si un libro está en buen estado, puede ser prestado.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
+
+10. Todos los usuarios registrados pueden tomar prestado un libro.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
+
+11. Existen libros que solo se pueden consultar en la biblioteca.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
+
+12. Todo libro prestado debe ser devuelto en 15 días.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
+
+13. Hay un libro que nadie ha pedido en préstamo.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
+
+14. Si un usuario tiene una multa, no puede pedir un libro prestado.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
+
+15. Todos los libros escritos por un mismo autor están en la misma
+    sección.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
+
+16. Existe un libro que tiene más de un ejemplar en la biblioteca.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
+
+17. Todo usuario con más de tres préstamos debe devolver uno para pedir
+    otro.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
+
+18. Hay una sección de la biblioteca donde todos los libros son de
+    ciencias.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
+
+19. No todos los libros en la biblioteca tienen más de 100 páginas.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
+
+20. Existe un usuario que ha tomado prestados todos los libros de la
+    sección infantil.
+
+    variables individuales:
+    relación:
+    cuantificadores lógicos:
+    Formalizar:
+    reglas o hechos:
