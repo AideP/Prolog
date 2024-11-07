@@ -1,0 +1,19 @@
+1. Member
+Permite saber si un elemento pertenece a una lista.
+member(X, [a, b, c]).  % Verifica si X es un miembro de la lista.
+
+2. Length
+Permite saber la longitud de una lista.
+length([a, b, c], L).  % L es la longitud de la lista [a, b, c].
+
+3. Append
+Concatena dos listas.
+append([a, b], [c, d], L).  % L es la lista resultante de unir [a, b] y [c, d].
+
+4. Reverse
+Revierte la lista.
+reverse([a, b, c], L).  % L será [c, b, a].
+
+5. select
+Elimina una ocurrencia de un elemento en una lista y da la lista resultante.
+select(b, [a, b, c, b], L).  % L será [a, c, b].
