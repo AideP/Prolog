@@ -110,3 +110,90 @@ especialidad secundaria:
 
 Pregunta: ¿Cuál es el descubrimiento de cada investigador, su país de
 origen, su instrumento favorito y su especialidad secundaria?
+
+variables individuales:
+Investigadores: Alonso, Beatriz, Carlos, Diana, Eduardo.
+Áreas de descubrimiento: astronomía, biología, química, física, geología.
+Países de origen: México, España, Canadá, Japón, Alemania.
+Instrumentos favoritos: microscopio, telescopio, acelerador, sismógrafo, espectrómetro.
+Especialidades secundarias: botánica, genética, oceanografía, paleontología, vulcanología.
+
+relación: Cada investigador está asociado a un descubrimiento (área de ciencia), un país de origen, un instrumento favorito y una especialidad secundaria.
+
+constantes individuales:
+Áreas: astronomía, biología, química, física, geología.
+Instrumentos: microscopio, telescopio, acelerador, sismógrafo, espectrómetro.
+Especialidades: botánica, genética, oceanografía, paleontología, vulcanología.
+
+investigador(alonso)
+investigador(beatriz)
+investigador(carlos)
+investigador(diana)
+investigador(eduardo)
+
+area(astronomia)
+area(biologia)
+area(quimica)
+area(fisica)
+area(geologia)
+
+pais(mexico)
+pais(espana)
+pais(canada)
+pais(japon)
+pais(alemania)
+
+instrumento(microscopio)
+instrumento(telescopio)
+instrumento(acelerador)
+instrumento(sismografo)
+instrumento(espectrometro)
+
+especialidad(botanica)
+especialidad(genetica)
+especialidad(oceanografia)
+especialidad(paleontologia)
+especialidad(vulcanologia)
+
+ 1. Carlos no es de México ni de Canadá, y no estudia biología.
+no_es_de(carlos, mexico)
+no_es_de(carlos, canada)
+no_estudia(carlos, biologia)
+
+  2. La persona que usa el telescopio es de Japón y trabaja en astronomía, pero no es Diana.
+usa(japon, telescopio)
+trabaja(japon, astronomia)
+no_es(diana, telescopio)
+no_trabaja(diana, astronomia)
+
+ 3. Beatriz es experta en botánica y no es de España ni de Japón.
+especialista(beatriz, botanica)
+no_es_de(beatriz, espana)
+no_es_de(beatriz, japon)
+
+ 4. La persona que usa el microscopio trabaja en biología y no es de Alemania ni de España.
+usa(microscopio, biologia)
+no_es_de(biologia, alemania)
+no_es_de(biologia, espana)
+
+ 5. El investigador de física es de México y utiliza el acelerador.
+trabaja(mexico, fisica)
+usa(mexico, acelerador)
+
+ 6. El especialista en genética usa el espectrómetro y no es Eduardo.
+especialista(espectrometro, genetica)
+no_es(eduardo, genetica)
+
+ 7. El investigador de Canadá se dedica a la geología.
+trabaja(canada, geologia)
+
+ 8. Eduardo estudia vulcanología y no utiliza el telescopio.
+especialista(eduardo, vulcanologia)
+no_es(eduardo, telescopio)
+
+ 9. Alonso es el experto en oceanografía.
+especialista(alonso, oceanografia)
+
+10. El investigador de Alemania utiliza un sismógrafo.
+usa(alemania, sismografo)
+
