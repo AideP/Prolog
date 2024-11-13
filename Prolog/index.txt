@@ -203,3 +203,13 @@ asignar_descubrimientos(AlonsoArea, BeatrizArea, CarlosArea, DianaArea, EduardoA
     dif(AlonsoArea, BeatrizArea), dif(AlonsoArea, CarlosArea), dif(AlonsoArea, DianaArea), dif(AlonsoArea, EduardoArea),
     dif(BeatrizArea, CarlosArea), dif(BeatrizArea, DianaArea), dif(BeatrizArea, EduardoArea),
     dif(CarlosArea, DianaArea), dif(CarlosArea, EduardoArea), dif(DianaArea, EduardoArea),
+    \+ no_es_de(carlos, mexico), \+ no_es_de(carlos, canada), \+ no_estudia(carlos, biologia),
+    \+ no_es(diana, telescopio), \+ no_trabaja(diana, astronomia),
+    especialista(beatriz, botanica), \+ no_es_de(beatriz, espana), \+ no_es_de(beatriz, japon),
+    usa(microscopio, biologia), \+ no_es_de(biologia, alemania), \+ no_es_de(biologia, espana),
+    trabaja(mexico, fisica), usa(mexico, acelerador),
+    especialista(espectrometro, genetica), \+ no_es(eduardo, genetica),
+    trabaja(canada, geologia),
+    especialista(eduardo, vulcanologia), \+ no_es(eduardo, telescopio),
+    especialista(alonso, oceanografia),
+    usa(alemania, sismografo).
