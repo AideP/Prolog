@@ -21,7 +21,6 @@ asignar_mascotas(AnaMascota, BrunoMascota, CarlaMascota, DanielMascota) :-
     mascota(AnaMascota), mascota(BrunoMascota), mascota(CarlaMascota), mascota(DanielMascota),
     dif(AnaMascota, BrunoMascota), dif(AnaMascota, CarlaMascota), dif(AnaMascota, DanielMascota),
     dif(BrunoMascota, CarlaMascota), dif(BrunoMascota, DanielMascota), dif(CarlaMascota, DanielMascota),
-    % Aplicamos las pistas
     \+ no_tiene(ana, AnaMascota),
     \+ no_tiene(bruno, BrunoMascota),
     \+ no_tiene(carla, CarlaMascota),
