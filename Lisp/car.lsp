@@ -27,3 +27,9 @@
       (progn
         (format t "elemento de la lista: ~a~%" (car lista))
         (recorrer-lista (cdr lista)))))
+
+(defun invertir-pares (lista)
+  (if (null lista) ;; Caso base: lista vacía 
+      lista
+      (append (list (car (cdr lista)) (car lista)) 
+  ))) 
