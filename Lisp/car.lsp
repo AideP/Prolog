@@ -32,4 +32,4 @@
   (if (null lista) ;; Caso base: lista vacía 
       lista
       (append (list (car (cdr lista)) (car lista)) 
-  ))) 
+              (invertir-pares (cdr (cdr lista)))))) 
