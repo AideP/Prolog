@@ -1,0 +1,25 @@
+(defun cond-menu ()
+  (format t "Selecciona la condicion:~%")
+  (format t "1. condicion-si~%")
+  (format t "2. when~%")
+  (format t "3. unless~%"))
+
+(defun leer-opcion ()
+  (format t "Elige una opcion (1-3): ")
+  (read))
+
+(defun condicion-si ()
+  (format t "~%Introduce el numero a verificar: ")
+  (let ((numero (read)))
+    (if (= (mod numero 2) 0) 
+        (format t "El número ~a es par.~%" numero)
+        (format t "El número ~a es impar.~%" numero))))
+
+(defun es-par ()
+  (cond-menu)
+  (let ((opcion (leer-opcion)))
+    (cond
+      ((= opcion 1) (condicion-si)) 
+      ((= opcion 2) (format t "Opcion en proceso.~%"))
+      ((= opcion 3) (format t "Opcion en proceso.~%"))
+      (t (format t "Opcion invalida.~%")))))
