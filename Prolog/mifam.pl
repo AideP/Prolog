@@ -92,3 +92,4 @@ hermanos(X, Y) :- padrede(P, X), padrede(P, Y), madrede(M, X), madrede(M, Y), X 
 
 cunado(X, Y) :- hermanos(X, Z), (esposa(Z, Y); esposo(Z, Y)).
 
+primos(X, Y) :- abuelos(A, X), abuelos(A, Y), X \= Y, \+ hermanos(X, Y).                    
