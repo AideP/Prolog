@@ -75,7 +75,13 @@ hermana(edith, raul).
 
 esposo(alejandroM, edith).
 esposo(jorge, teresa).
+esposo(alejandro,edithM).
+esposo(raul,maricruz).
 esposa(edithM, alejandro).
+esposa(maricruz,raul).
+esposa(edith,alejandroM).
+esposa(teresa,jorge).
+
 
 
 abuelos(X, Y) :- (padrede(X, Z), padrede(Z, Y)); (padrede(X, Z), madrede(Z, Y)); (madrede(X, Z), padrede(Z, Y));  (madrede(X, Z), madrede(Z, Y)).  
@@ -84,6 +90,5 @@ tio(X, Y) :- (hermano(X, Z), padrede(Z, Y)); (hermana(X, Z), padrede(Z, Y)); (he
 
 hermanos(X, Y) :- padrede(P, X), padrede(P, Y), madrede(M, X), madrede(M, Y), X \= Y.
 
-%prueba de logica para cunado
-hermanos(X, maricruz), esposa(maricruz, raul).      
+cunado(X, Y) :- hermanos(X, Z), (esposa(Z, Y); esposo(Z, Y)).
 
