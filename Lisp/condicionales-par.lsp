@@ -27,11 +27,11 @@
 (defun condicion-almenosque ()
 (format t "~%Introduce el número a verificar: ")
  (let ((numero (read)))
-    (unless (/= (mod numero 2) 0)
+    (unless (= (mod numero 2) 0)
         (format t "El número ~a es impar.~%" numero)
        )
-       (unless (< edad 18)
-       (format t "Es mayor de edad.~%"))))
+       (unless (/= (mod numero 2) 0)
+       (format t "El número ~a es par.~%" numero))))
 
 (defun es-par ()
   (cond-menu)
@@ -39,5 +39,5 @@
     (cond
       ((= opcion 1) (condicion-si)) 
       ((= opcion 2) (condicion-cuando))
-      ((= opcion 3) (condicion.almenosque))
+      ((= opcion 3) (condicion-almenosque))
       (t (format t "Opcion invalida.~%")))))
