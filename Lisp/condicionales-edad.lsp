@@ -24,11 +24,20 @@
        (When (< edad 18)
        (format t "Es menor de edad.~%"))))
 
+(defun condicion-almenosque ()
+(format t "~%Introduce tu edad: ")
+ (let ((edad (read)))
+    (unless (>= edad 18)
+        (format t "Es menor de edad.~%")
+       )
+       (unless (< edad 18)
+       (format t "Es mayor de edad.~%"))))
+
 (defun es-mayor ()
-  (cond-menu) ;; Mostrar el menú
+  (cond-menu)
   (let ((opcion (leer-opcion)))
     (cond
       ((= opcion 1) (condicion-si)) 
       ((= opcion 2) (condicion-cuando))
-      ((= opcion 3) (format t "Opción 'unless' no implementada aún.~%"))
-      (t (format t "Opción inválida.~%")))))
+      ((= opcion 3) (condicion-almenosque))
+      (t (format t "Opcion invalida.~%")))))
