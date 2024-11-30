@@ -18,6 +18,12 @@ padrede(raul, aide).
 padrede(raul, cristina).
 padrede(raul, raul_hijo).
 padrede(benjamin, raul).
+padrede(benjamin, javier).
+padrede(benjamin, jorge).
+padrede(benjamin, eduardo).
+padrede(benjamin, alejandro).
+padrede(benjamin, edith).
+padrede(benjamin, leticia).
 padrede(jorge, esmeralda).
 padrede(jorge, hugo).
 padrede(jorge, nataly).
@@ -27,12 +33,22 @@ padrede(alejandroM, alejandrito).
 padrede(alejandroM, eleazar).
 padrede(alejandroM, kenia).
 padrede(dolores, maricruz).
+padrede(dolores, jose).
+padrede(dolores, griselda).
 
 madrede(maricruz, aide).
 madrede(maricruz, cristina).
 madrede(maricruz, raul_hijo).
 madrede(cristina_abuela, raul).
+madrede(cristina_abuela, edith).
+madrede(cristina_abuela, jorge).
+madrede(cristina_abuela, javier).
+madrede(cristina_abuela, eduardo).
+madrede(cristina_abuela, leticia).
+madrede(cristina_abuela, alejandro).
 madrede(teresa_abuela, maricruz).
+madrede(teresa_abuela, jose).
+madrede(teresa_abuela, griselda).
 madrede(teresa, esmeralda).
 madrede(teresa, hugo).
 madrede(teresa, nataly).
