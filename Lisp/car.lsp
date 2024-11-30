@@ -18,4 +18,8 @@
       nil
       (cons (car lista) (eliminar-ultimo (cdr lista)))))
 
+(defun sumar-primeros-tres (lista)
+      (+ (car lista) (car (cdr lista)) (car (cdr (cdr lista)))))
+
+
 
