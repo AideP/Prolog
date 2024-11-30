@@ -84,5 +84,6 @@ tio(X, Y) :- (hermano(X, Z), padrede(Z, Y)); (hermana(X, Z), padrede(Z, Y)); (he
 
 hermanos(X, Y) :- padrede(P, X), padrede(P, Y), madrede(M, X), madrede(M, Y), X \= Y.
 
-cunado(X, Y) :-(hermano(X, Z), esposo(Y, Z)); (hermana(X, Z), esposa(Y, Z)); (esposo(X, Z), hermano(Z, Y)); (esposa(X, Z), hermana(Z, Y)).       
+%prueba de logica para cunado
+hermanos(X, maricruz), esposa(maricruz, raul).      
 
