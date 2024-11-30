@@ -22,7 +22,5 @@
       (+ (car lista) (car (cdr lista)) (car (cdr (cdr lista)))))
 
 (defun recorrer-lista (lista)
-(format t "Elemento: ~a~%" (car lista)))
-
-
-
+(format t "Elemento: ~a~%" (car lista))
+(recorrer-lista (cdr lista)))
