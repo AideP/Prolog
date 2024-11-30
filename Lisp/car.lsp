@@ -10,3 +10,12 @@
 (list (car lista) (car (cdr lista))(car (cdr (cdr lista))))
 )
 
+(defun eliminar-primero-ultimos (lista)
+      (eliminar-ultimo (cdr lista)))
+
+(defun eliminar-ultimo (lista)
+  (if (null (cdr lista)) ;; Si solo queda un elemento, devuelve NIL
+      nil
+      (cons (car lista) (eliminar-ultimo (cdr lista)))))
+
+
