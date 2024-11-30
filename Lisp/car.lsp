@@ -22,5 +22,8 @@
       (+ (car lista) (car (cdr lista)) (car (cdr (cdr lista)))))
 
 (defun recorrer-lista (lista)
-(format t "Elemento: ~a~%" (car lista))
-(recorrer-lista (cdr lista)))
+(if (null lista)
+      (format t "Fin del recorrido.~%") ;; Caso base: la lista vacía
+      (progn
+        (format t "elemento de la lista: ~a~%" (car lista))
+        (recorrer-lista (cdr lista)))))
