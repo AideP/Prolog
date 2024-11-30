@@ -8,6 +8,8 @@ madre(teresa).
 madre(cristina_abuela).
 madre(teresa_abuela).
 madre(leticia).
+madre(edithM).
+madre(edith).
 
 padrede(raul, aide).
 padrede(raul, cristina).
@@ -49,14 +51,19 @@ esposo(alejandroM, edith).
 esposo(jorge, teresa).
 esposa(edithM, alejandro).
 
-abuelos(X,Y):- (padrede(X,Z), padrede(Z,Y));(madrede(X,Z), madrede(Z,Y)).
-tio(X,Y):- (hermano(X,Z), padrede(Z,Y));(hermana(X,Z), madrede(Z,Y)).
-hermanos(X,Y):- 
-    padrede(P,X), padrede(P,Y), 
-    madrede(M,X), madrede(M,Y), 
+abuelos(X, Y) :-
+    (padrede(X, Z), padrede(Z, Y));
+    (madrede(X, Z), madrede(Z, Y)).
+
+tio(X, Y) :-
+    (hermano(X, Z), padrede(Z, Y));
+    (hermana(X, Z), madrede(Z, Y)).
+
+hermanos(X, Y) :-
+    padrede(P, X), padrede(P, Y),
+    madrede(M, X), madrede(M, Y),
     X \= Y.
-cunado(X,Y):- 
-    (hermano(X,Z), esposo(Y,Z));
-    (hermana(X,Z), esposa(Y,Z)).
 
-
+cunado(X, Y) :-
+    (hermano(X, Z), esposo(Y, Z));
+    (hermana(X, Z), esposa(Y, Z)).
