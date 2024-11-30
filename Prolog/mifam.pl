@@ -3,6 +3,7 @@ padre(benjamin).
 padre(jorge).
 padre(alejandroM).
 padre(alejandro).
+
 madre(maricruz).
 madre(teresa).
 madre(cristina_abuela).
@@ -40,30 +41,22 @@ madrede(edith, eleazar).
 madrede(edith, kenia).
 
 hermano(jose, maricruz).
-hermana(edith, raul).
 hermano(jorge, raul).
 hermano(javier, raul).
 hermano(eduardo, raul).
 hermana(griselda, maricruz).
 hermana(leticia, raul).
+hermana(edith, raul).
 
 esposo(alejandroM, edith).
 esposo(jorge, teresa).
 esposa(edithM, alejandro).
 
-abuelos(X, Y) :-
-    (padrede(X, Z), padrede(Z, Y));
-    (madrede(X, Z), madrede(Z, Y)).
 
-tio(X, Y) :-
-    (hermano(X, Z), padrede(Z, Y));
-    (hermana(X, Z), madrede(Z, Y)).
+abuelos(X, Y) :- (padrede(X, Z), padrede(Z, Y)); (padrede(X, Z), madrede(Z, Y)); (madrede(X, Z), padrede(Z, Y));  (madrede(X, Z), madrede(Z, Y)).  
 
-hermanos(X, Y) :-
-    padrede(P, X), padrede(P, Y),
-    madrede(M, X), madrede(M, Y),
-    X \= Y.
+tio(X, Y) :- (hermano(X, Z), padrede(Z, Y)); (hermana(X, Z), padrede(Z, Y)); (hermano(X, Z), madrede(Z, Y)); (hermana(X, Z), madrede(Z, Y)).
 
-cunado(X, Y) :-
-    (hermano(X, Z), esposo(Y, Z));
-    (hermana(X, Z), esposa(Y, Z)).
+hermanos(X, Y) :- padrede(P, X), padrede(P, Y), madrede(M, X), madrede(M, Y), X \= Y.
+
+cunado(X, Y) :- (hermano(X, Z), esposo(Y, Z)); (hermana(X, Z), esposa(Y, Z)).

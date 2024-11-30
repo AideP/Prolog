@@ -99,17 +99,34 @@
          ("Participación en los Juegos" ("74° Juegos del Hambre"))
          ("Aliados" ("Katniss Everdeen")))))
       ))
-    )
-
+    ))
 
 (defun recorrer-principales (nodo)
+  "Recorre los libros principales dentro de la estructura y permite entrar a detalles."
   (dolist (libro nodo)
-    (let ((titulo (car libro)))
-      (format t "Libro: ~A~%" titulo)
-            )))
+    (let ((titulo (car libro))
+          (personajes (cadr libro)))
+      (format t "~%Libro: ~A~%" titulo) ;; Muestra el título del libro
+      (recorrer-personajes personajes)))) ;; Llama a una función auxiliar para recorrer personajes
 
+(defun recorrer-personajes (personajes)
+  "Recorre los personajes dentro de un libro."
+  (dolist (personaje personajes)
+    (let ((nombre (car personaje))
+          (detalles (cadr personaje)))
+      (format t "~%  Personaje: ~A~%" nombre) ;; Muestra el nombre del personaje
+      (recorrer-detalles detalles)))) ;; Llama a una función auxiliar para recorrer detalles
 
+(defun recorrer-detalles (detalles)
+  "Recorre los detalles de un personaje."
+  (dolist (detalle detalles)
+    (let ((categoria (car detalle))
+          (contenido (cadr detalle)))
+      (format t "~%    ~A: ~A" categoria contenido)))) ;; Muestra los detalles del personaje
+
+;; Llama a la función principal para recorrer los nodos
 (recorrer-principales *nodes*)
+
 
 ; modificar la función para ir haciendo preguntas y recibir los datos dados por el usuario (Y/N)
 
