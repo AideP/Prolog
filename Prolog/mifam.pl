@@ -3,6 +3,7 @@ padre(benjamin).
 padre(jorge).
 padre(alejandroM).
 padre(alejandro).
+padre(dolores).
 
 madre(maricruz).
 madre(teresa).
@@ -11,6 +12,7 @@ madre(teresa_abuela).
 madre(leticia).
 madre(edithM).
 madre(edith).
+madre(griselda).
 
 padrede(raul, aide).
 padrede(raul, cristina).
@@ -24,6 +26,7 @@ padrede(alejandro, alejandra).
 padrede(alejandroM, alejandrito).
 padrede(alejandroM, eleazar).
 padrede(alejandroM, kenia).
+padrede(dolores, maricruz).
 
 madrede(maricruz, aide).
 madrede(maricruz, cristina).
@@ -39,6 +42,12 @@ madrede(leticia, emely).
 madrede(edith, alejandrito).
 madrede(edith, eleazar).
 madrede(edith, kenia).
+madrede(griselda, bianca).
+madrede(griselda,diana).
+madrede(griselda,maria_luisa).
+madrede(griselda,brianna).
+madrede(griselda,rafael).
+madrede(griselda,nathan).
 
 hermano(jose, maricruz).
 hermano(jorge, raul).
