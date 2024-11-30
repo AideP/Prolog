@@ -4,10 +4,9 @@
 
 (defun ultimos-tres ()
 (cdr(cdr(cdr(cdr(cdr '(a b c d e f g h))))))
-
 )
 
-(defun primeros-tres()
-
+(defun primeros-tres(lista)
+(list (car lista) (car (cdr lista))(car (cdr (cdr lista))))
 )
 
