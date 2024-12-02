@@ -68,8 +68,8 @@ elizaLikes(R) :-
     respuestaGustos(Gustos, R).
 
 % Posible respuesta
-respuestaGustos([], ['No me gusta nada en particular.']).
-respuestaGustos([G|Gs], ['Me gustan', G | Resto]) :-
+respuestaGustos([], ['I dont like anything.']).
+respuestaGustos([G|Gs], ['I like ', G | Resto]) :-
     append(Gs, ['.'], Resto).
 
 % lo que hace eliza: flagDo
@@ -110,6 +110,18 @@ replace0([I|_], Input, _, Resp, R):-
 	nth0(0, Resp, X),
 	X == flagLike,
 	elizaLikes(Atom, R).
+
+% eliza likes y todos los gustos
+replace0([], _, _, Resp, Resp).
+replace0([I|_], Input, _, Resp, R) :-
+    nth0(I, Input, Atom),
+    Resp = [flagLike | _],
+    elizaLikes(R), !.
+replace0([I|Index], Input, N, Resp, R) :-
+    nth0(I, Input, Atom),
+    select(N, Resp, Atom, R1),
+    N1 is N + 1,
+    replace0(Index, Input, N1, R1, R), !.
 
 % Eliza does:
 replace0([I|_], Input, _, Resp, R):-
