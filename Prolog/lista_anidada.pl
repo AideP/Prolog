@@ -1,5 +1,5 @@
-start :-
+lista_aplanada :-
     write('Ingrese una lista para aplanar (ejemplo: [[a, [b, c]]): '),
     read(UserList),
-    write(UserList).
-%flatten([1, [2, [3, 4], 5], [6]], R).
+    flatten(UserList, Result),
+    write('La lista aplanada es: '), write(Result), nl.
