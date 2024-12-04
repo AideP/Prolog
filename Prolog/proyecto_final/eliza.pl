@@ -53,8 +53,8 @@ template([please, s(_), _], ['No', i, can, not, help, ',', i, am, just, a, machi
 				  
 template(_, ['Please', explain, a, little, more, '.'], []). 
 % Lo que le gusta a eliza : flagLike
-elizaLikes(X, R):- likes(X), R = ['Yeah', i, like, X].
-elizaLikes(X, R):- \+likes(X), R = ['Nope', i, do, not, like, X].
+%elizaLikes(X, R):- likes(X), R = ['Yeah', i, like, X].
+%elizaLikes(X, R):- \+likes(X), R = ['Nope', i, do, not, like, X].
 likes(apples).
 likes(ponies).
 likes(zombies).
