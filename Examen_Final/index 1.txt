@@ -1,0 +1,71 @@
+                           ━━━━━━━━━━━━━━━━━
+                              EXAMEN FINAL
+
+                            Eduardo Alcaraz
+                           ━━━━━━━━━━━━━━━━━
+
+
+Table of Contents
+─────────────────
+
+Problema 1: Los guardianes de los templos
+Problemas 2: Las armas de los héroes Cuatro héroes mitológicos
+Problema 3: Las gemas de los titanes Cuatro titanes
+
+
+Problema 1: Los guardianes de los templos
+═════════════════════════════════════════
+
+  Cuatro guardianes (Apolo, Hécate, Ares y Hermes) custodian templos
+  mitológicos asociados con diferentes elementos (fuego, agua, tierra y
+  aire). Sabemos que:
+
+  guardianes: apolo, hecate, ares, hermes
+  elementos: fuego, agua, tierra, aire
+
+  • Apolo no cuida el templo de fuego ni el de tierra.
+  no_cuida(apolo,fuego)
+  no_cuida(apolo,tierra)
+
+  • Hécate no cuida el templo de aire.
+  no_cuida(hecate,aire)
+
+  • Ares no cuida el templo de agua ni de aire.
+  no_cuida(ares,agua)
+  no_cuida(ares,aire)
+
+  • Hermes cuida el templo de fuego o de agua.
+  puede_cuidar(hermes,agua,fuego)
+
+  Pregunta: ¿Qué templo cuida cada guardián?
+
+%posible regla, tomando en cuenta que cada guardian cuida 1 solo templo (/+ )
+asignacion(Templos) :-
+    Templos = [apolo-T1, hecate-T2, ares-T3, hermes-T4],
+    templo(T1), templo(T2), templo(T3), templo(T4),
+    T1 \= T2, T1 \= T3, T1 \= T4, T2 \= T3, T2 \= T4, T3 \= T4,
+    puede_cuidar(apolo, T1),
+    puede_cuidar(hecate, T2),
+    puede_cuidar(ares, T3),
+    cuida_opciones(hermes, T4),
+    (T4 = fuego; T4 = agua). 
+
+══════════════════════════════════════════════════════════════
+Problemas 2: Las armas de los héroes Cuatro héroes mitológicos
+══════════════════════════════════════════════════════════════
+
+   Las armas de los héroes Cuatro héroes mitológicos (Aquiles, Perseo,
+   Hércules y Teseo) poseen armas únicas (espada, lanza, arco y
+   escudo). Sabemos que: Aquiles no usa el escudo ni el arco.  Perseo no
+   usa la espada.  Hércules no usa la lanza ni el escudo.  Teseo usa el
+   arco o el escudo. Pregunta: ¿Qué arma pertenece a cada héroe?
+
+
+Problema 3: Las gemas de los titanes Cuatro titanes
+═══════════════════════════════════════════════════
+
+  (Cronos, Océano, Hiperión y Japeto) tienen cada uno una gema (zafiro,
+  rubí, esmeralda y diamante). Sabemos que: Cronos no tiene el zafiro ni
+  el diamante.  Océano no tiene el rubí.  Hiperión no tiene el zafiro ni
+  el rubí.  Japeto tiene el diamante o la esmeralda. Pregunta: ¿Qué gema
+  tiene cada titán?
