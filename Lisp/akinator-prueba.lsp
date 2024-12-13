@@ -47,98 +47,33 @@
                                 ("Aliados" ("Beetee Latier" "Katniss Everdeen"))
             )))
     ))
-    (Sinsajo (
-            ("Katniss Everdeen" ("Distrito 13" (
-                                ("Atributos" (
-                                    ("Habilidad" "Liderazgo")
-                                    ("Estado" "Viva")
-                                    ("Rol" "El símbolo de la rebelión")
-                                ))
-                                ("Historia" (
-                                    ("Participación en los Juegos" ("74 y 75 Juegos del Hambre"))
-                                ))
-                                ("Aliados" ("Peeta Mellark" "Gale Hawthorne" "Boggs"))
-            )))
-            ("Primrose Everdeen" ("Distrito 13" (
-                                ("Atributos" (
-                                    ("Habilidad" "Medicina")
-                                    ("Estado" "Muerta")
-                                    ("Rol" "Hermana menor de Katniss")
-                                ))
-                                ("Historia" (
-                                    ("Contribuciones" ("Cuidados médicos en la rebelión"))
-                                ))
-                                ("Aliados" ("Katniss Everdeen" "Gale Hawthorne"))
-            )))
-    ))
-    (Balada-de-pájaros-cantores-y-serpientes (
-            ("Coriolanus Snow" ("Capitolio" (
-                                ("Atributos" (
-                                    ("Habilidad" "Manipulación")
-                                    ("Estado" "Vivo")
-                                    ("Rol" "Futuro presidente de Panem")
-                                ))
-                                ("Historia" (
-                                    ("Participación" ("Mentor en los 10 Juegos del Hambre"))
-                                ))
-                                ("Aliados" ("Lucy Gray Baird" "Sejanus Plinth"))
-            )))
-            ("Lucy Gray Baird" ("Distrito 12" (
-                                ("Atributos" (
-                                    ("Habilidad" "Canto")
-                                    ("Estado" "Desconocido")
-                                    ("Rol" "Tributo carismática del Distrito 12")
-                                ))
-                                ("Historia" (
-                                    ("Participación en los Juegos" ("10 Juegos del Hambre"))
-                                ))
-                                ("Aliados" ("Coriolanus Snow"))
-            )))
-    ))
-    (Otros (
-            ("Effie Trinket" ("Capitolio" (
-                                ("Atributos" (
-                                    ("Habilidad" "Etiqueta y protocolo")
-                                    ("Estado" "Viva")
-                                    ("Rol" "Chaperona de los tributos del Distrito 12")
-                                ))
-                                ("Historia" (
-                                    ("Contribuciones" ("Organización de ceremonias"))
-                                ))
-                                ("Aliados" ("Katniss Everdeen" "Peeta Mellark"))
-            )))
-            ("Rue" ("Distrito 11" (
-                                ("Atributos" (
-                                    ("Habilidad" "Agilidad y sigilo")
-                                    ("Estado" "Muerta")
-                                    ("Rol" "Aliada joven de Katniss")
-                                ))
-                                ("Historia" (
-                                    ("Participación en los Juegos" ("74 Juegos del Hambre"))
-                                ))
-                                ("Aliados" ("Katniss Everdeen"))
-            )))
-    ))
+    ;; Otros nodos omitidos por brevedad.
 ))
 
-(defun recorrer-principales (nodo)
-  (dolist (libro nodo)
+(defun recorrer-nodos (nodos)
+  "Recorre todos los libros principales en los nodos."
+  (dolist (libro nodos)
     (let ((titulo (car libro))
           (personajes (cadr libro)))
-      (format t "~%Libro: ~A~%" titulo) 
-      ))) 
+      (format t "~%Libro: ~A~%" titulo)
+      (recorrer-personajes personajes))))
 
 (defun recorrer-personajes (personajes)
+  "Recorre todos los personajes de un libro."
   (dolist (personaje personajes)
     (let ((nombre (car personaje))
           (detalles (cadr personaje)))
-      (format t "~%  Personaje: ~A~%" nombre) 
-      ))) 
+      (format t "  Personaje: ~A~%" nombre)
+      (recorrer-detalles detalles))))
 
 (defun recorrer-detalles (detalles)
+  "Recorre los detalles de un personaje."
   (dolist (detalle detalles)
     (let ((categoria (car detalle))
           (contenido (cadr detalle)))
-      (format t "~%    ~A: ~A" categoria contenido))))
+      (format t "    ~A: ~A~%" categoria contenido)
+      (when (listp contenido) ; Si el contenido es una lista, lo recorremos.
+        (recorrer-detalles contenido)))))
 
-
+;; Llamada principal para iniciar el recorrido.
+(recorrer-nodos *nodes*)
