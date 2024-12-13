@@ -1,0 +1,116 @@
+personaje(katniss).
+personaje(peeta).
+personaje(finnick).
+personaje(johanna).
+personaje(snow).
+personaje(lucy_gray).
+personaje(haymitch).
+personaje(rue).
+personaje(cinna).
+personaje(effie).
+personaje(beetee).
+personaje(mags).
+personaje(coin).
+personaje(prim).
+personaje(coriolanus_snow).
+personaje(sejanus).
+personaje(tigris).
+personaje(caesar_flickerman).
+
+nombre(katniss, 'Katniss Everdeen').
+nombre(peeta, 'Peeta Mellark').
+nombre(finnick, 'Finnick Odair').
+nombre(johanna, 'Johanna Mason').
+nombre(snow, 'Presidente Snow').
+nombre(lucy_gray, 'Lucy Gray Baird').
+nombre(haymitch, 'Haymitch Abernathy').
+nombre(rue, 'Rue').
+nombre(cinna, 'Cinna').
+nombre(effie, 'Effie Trinket').
+nombre(beetee, 'Beetee Latier').
+nombre(mags, 'Mags').
+nombre(coin, 'Alma Coin').
+nombre(prim, 'Primrose Everdeen').
+nombre(coriolanus_snow, 'Coriolanus Snow').
+nombre(sejanus, 'Sejanus Plinth').
+nombre(tigris, 'Tigris').
+nombre(caesar_flickerman, 'Caesar Flickerman').
+
+especialidad_distrito(1, 'Productos de lujo').
+especialidad_distrito(2, 'Armamento y fuerzas militares').
+especialidad_distrito(3, 'Tecnología y electricidad').
+especialidad_distrito(4, 'Pesca').
+especialidad_distrito(5, 'Energía').
+especialidad_distrito(6, 'Transporte').
+especialidad_distrito(7, 'Madera y papel').
+especialidad_distrito(8, 'Textiles').
+especialidad_distrito(9, 'Granos y agricultura').
+especialidad_distrito(10, 'Ganadería').
+especialidad_distrito(11, 'Agricultura').
+especialidad_distrito(12, 'Minería de carbón').
+especialidad_distrito(13, 'Armamento nuclear y gobierno subterráneo').
+
+distrito_pertenece(katniss, 12).
+distrito_pertenece(peeta, 12).
+distrito_pertenece(finnick, 4).
+distrito_pertenece(johanna, 7).
+distrito_pertenece(rue, 11).
+distrito_pertenece(beetee, 3).
+distrito_pertenece(mags, 4).
+distrito_pertenece(haymitch, 12).
+distrito_pertenece(lucy_gray, 12).
+distrito_pertenece(coriolanus_snow, capitolio).
+distrito_pertenece(sejanus, capitolio).
+distrito_pertenece(tigris, capitolio).
+
+habilidad(katniss, 'Arco y flecha').
+habilidad(peeta, camuflaje).
+habilidad(finnick, 'Lucha con tridente').
+habilidad(johanna, sigilo).
+habilidad(haymitch, 'Estrategia y manipulación').
+habilidad(rue, 'Escalar árboles y sigilo').
+habilidad(beetee, 'Ingeniería eléctrica').
+habilidad(mags, 'Supervivencia y pesca').
+habilidad(coriolanus_snow, 'Manipulación política').
+
+estado(katniss, viva).
+estado(peeta, vivo).
+estado(finnick, muerto).
+estado(johanna, viva).
+estado(rue, muerta).
+estado(haymitch, vivo).
+estado(mags, muerta).
+estado(coriolanus_snow, muerto).
+estado(lucy_gray, desconocido).
+
+rol(katniss, 'Protagonista principal').
+rol(peeta, 'Interés amoroso de Katniss').
+rol(finnick, 'Aliado de Katniss y Peeta').
+rol(johanna, 'Tributo del Distrito 7').
+rol(haymitch, 'Mentor de Katniss y Peeta').
+rol(rue, 'Aliada de Katniss').
+rol(beetee, 'Tributo y aliado tecnológico').
+rol(mags, 'Mentora y tributo del Distrito 4').
+rol(coriolanus_snow, 'Presidente de Panem').
+rol(lucy_gray, 'Protagonista de La Balada de Pájaros Cantores y Serpientes').
+
+participacion(katniss, 74, vencedora).
+participacion(peeta, 74, vencedor).
+participacion(finnick, 65, vencedor).
+participacion(johanna, 71, vencedora).
+participacion(rue, 74, muerta).
+participacion(haymitch, 50, vencedor).
+participacion(mags, 11, vencedora).
+participacion(lucy_gray, 10, vencedora).
+
+aliado(katniss, peeta).
+aliado(katniss, rue).
+aliado(katniss, haymitch).
+aliado(peeta, katniss).
+aliado(peeta, haymitch).
+aliado(finnick, katniss).
+aliado(finnick, peeta).
+aliado(finnick, mags).
+aliado(johanna, beetee).
+aliado(johanna, katniss).
+aliado(lucy_gray, coriolanus_snow).
