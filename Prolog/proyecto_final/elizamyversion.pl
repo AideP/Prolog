@@ -12,7 +12,7 @@ eliza(Input) :-
     LowerInput = ['adios'],
     writeln('Adios. Espero haberte ayudado.'), !.
 
-% Respuesta específica
+% Respuestas
 eliza(Input) :-
     template(Stim, Resp, IndStim),
     match(Stim, Input),
@@ -30,6 +30,7 @@ eliza(_) :-
 
 
 % Plantillas para consultas
+%          FAMILIA     %
 template([eliza, quien, es, el, hijo, de, s(_)], [flag_hijos], [6]).
 template([eliza, quien, es, el, padre, de, s(_)], [flag_padre], [6]).
 template([eliza, quien, es, la, madre, de, s(_)], [flag_madre], [6]).
@@ -48,6 +49,17 @@ template([eliza, quienes, son, las, tias, mujeres, de, s(_)], [flag_tias_mujeres
 template([eliza, quien, es, el, cunado, de, s(_)], [flag_cunado], [6]).
 template([eliza, quienes, son, los, primos, de, s(_)], [flag_primos], [6]).
 template([eliza, quienes, son, los, hermanos, de, s(_)], [flag_hermanos], [6]).
+%         FAMILIA     %
+
+%       ARBOL DE DATOS         %
+template([eliza, que, especialidad, tiene, el, distrito, s(_)], [flag_especialidad_distrito], [6]).
+template([eliza, que, habilidades, tiene, s(_)], [flag_habilidades], [4]).
+template([eliza, que, rol, tiene, s(_)], [flag_rol], [4]).
+template([eliza, quienes, son, los, aliados, de, s(_)], [flag_aliados], [6]).
+template([eliza, en, que, juegos, participo, s(_)], [flag_participacion], [5]).
+template([eliza, que, distrito, tiene, la, especialidad, s(_)], [flag_distrito_especialidad], [6]).
+%       ARBOL DE DATOS         %
+
 
 % Coincidencias
 match([], []).
@@ -60,23 +72,42 @@ match([S|Stim], [_|Input]) :-
 
 % Respuestas específicas según la consulta
 %RESPUESTAS PADRES%
+
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_hijos | _],
-    findall(Y, (padrede(Atom, Y); madrede(Atom, Y)), Results),
-    format_response('hijos', Atom, Results, R), !.
+    findall(Y, (padrede(Atom, Y); madrede(Atom, Y)), Hijos),
+    ( Hijos \= [] ->
+        atomic_list_concat(Hijos, ', ', HijosStr),
+        format(atom(R), 'Los hijos de ~w son ~w.', [Atom, HijosStr])
+    ;
+        format(atom(R), ' ~w no tiene hijos.', [Atom])
+    ), !.
+
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_padre | _],
-    findall(X, padrede(X, Atom), Results),
-    format_response('padre', Atom, Results, R), !.
+    findall(X, padrede(X, Atom), Padres),
+    ( Padres \= [] ->
+        atomic_list_concat(Padres, ', ', PadresStr),
+        format(atom(R), 'El padre de ~w es ~w.', [Atom, PadresStr])
+    ;
+        format(atom(R), ' ~w no tiene un padre conocido.', [Atom])
+    ), !.
+
+
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_madre | _],
-    findall(X, madrede(X, Atom), Results),
-    format_response('madre', Atom, Results, R), !.
+    findall(X, madrede(X, Atom), Madres),
+    ( Madres \= [] ->
+        atomic_list_concat(Madres, ', ', MadresStr),
+        format(atom(R), 'La madre de ~w es: ~w.', [Atom, MadresStr])
+        ;
+        format(atom(R), 'Lo siento, no se encontró una madre para ~w.', [Atom])
+    ), !.
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
@@ -154,6 +185,22 @@ replace0([I|_], Input, _, Resp, R) :-
     Resp = [flag_hermanos | _],
     findall(Y, hermanos(Atom, Y), Results),
     format_response('hermanos', Atom, Results, R), !.
+
+%   RESPUESTAS ARBOL DE DATOS   %
+replace0([I|_], Input, _, Resp, R) :-
+    nth0(I, Input, Atom), 
+    Resp = [flag_participacion | _],
+    participacion(Atom, Juegos, Resultado),
+    format(atom(R), '~w participo en los Juegos del Hambre numero ~w y fue ~w.', [Atom, Juegos, Resultado]), !.
+
+    replace0([I|_], Input, _, Resp, R) :-
+        nth0(I, Input, Distrito), 
+        Resp = [flag_especialidad_distrito | _],
+        especialidad_distrito(Distrito, Especialidad),
+        format(atom(R), 'El distrito ~w se especializa en: ~w.', [Distrito, Especialidad]), !.
+    
+%   RESPUESTAS ARBOL DE DATOS   %
+
 
 % Formatear respuesta personalizada
 format_response(Category, Person, Results, R) :-
@@ -256,6 +303,139 @@ esposa(edithM, alejandro).
 esposa(maricruz,raul).
 esposa(edith,alejandroM).
 esposa(teresa,jorge).
+
+%ARBOL DE DATOS%
+personaje(katniss).
+personaje(peeta).
+personaje(finnick).
+personaje(johanna).
+personaje(snow).
+personaje(lucy_gray).
+personaje(haymitch).
+personaje(rue).
+personaje(cinna).
+personaje(effie).
+personaje(beetee).
+personaje(mags).
+personaje(coin).
+personaje(prim).
+personaje(coriolanus_snow).
+personaje(sejanus).
+personaje(tigris).
+personaje(caesar_flickerman).
+
+distrito(1).
+distrito(2).
+distrito(3).
+distrito(4).
+distrito(5).
+distrito(6).
+distrito(7).
+distrito(8).
+distrito(9).
+distrito(10).
+distrito(11).
+distrito(12).
+
+nombre(katniss, 'Katniss Everdeen').
+nombre(peeta, 'Peeta Mellark').
+nombre(finnick, 'Finnick Odair').
+nombre(johanna, 'Johanna Mason').
+nombre(snow, 'Presidente Snow').
+nombre(lucy_gray, 'Lucy Gray Baird').
+nombre(haymitch, 'Haymitch Abernathy').
+nombre(rue, 'Rue').
+nombre(cinna, 'Cinna').
+nombre(effie, 'Effie Trinket').
+nombre(beetee, 'Beetee Latier').
+nombre(mags, 'Mags').
+nombre(coin, 'Alma Coin').
+nombre(prim, 'Primrose Everdeen').
+nombre(coriolanus_snow, 'Coriolanus Snow').
+nombre(sejanus, 'Sejanus Plinth').
+nombre(tigris, 'Tigris').
+nombre(caesar_flickerman, 'Caesar Flickerman').
+
+especialidad_distrito(1, 'Productos de lujo').
+especialidad_distrito(2, 'Armamento y fuerzas militares').
+especialidad_distrito(3, 'Tecnología y electricidad').
+especialidad_distrito(4, 'Pesca').
+especialidad_distrito(5, 'Energía').
+especialidad_distrito(6, 'Transporte').
+especialidad_distrito(7, 'Madera y papel').
+especialidad_distrito(8, 'Textiles').
+especialidad_distrito(9, 'Granos y agricultura').
+especialidad_distrito(10, 'Ganadería').
+especialidad_distrito(11, 'Agricultura').
+especialidad_distrito(12, 'Minería de carbón').
+especialidad_distrito(13, 'Armamento nuclear y gobierno subterráneo').
+
+distrito_pertenece(katniss, 12).
+distrito_pertenece(peeta, 12).
+distrito_pertenece(finnick, 4).
+distrito_pertenece(johanna, 7).
+distrito_pertenece(rue, 11).
+distrito_pertenece(beetee, 3).
+distrito_pertenece(mags, 4).
+distrito_pertenece(haymitch, 12).
+distrito_pertenece(lucy_gray, 12).
+distrito_pertenece(coriolanus_snow, capitolio).
+distrito_pertenece(sejanus, capitolio).
+distrito_pertenece(tigris, capitolio).
+
+habilidad(katniss, 'Arco y flecha').
+habilidad(peeta, camuflaje).
+habilidad(finnick, 'Lucha con tridente').
+habilidad(johanna, sigilo).
+habilidad(haymitch, 'Estrategia y manipulación').
+habilidad(rue, 'Escalar árboles y sigilo').
+habilidad(beetee, 'Ingeniería eléctrica').
+habilidad(mags, 'Supervivencia y pesca').
+habilidad(coriolanus_snow, 'Manipulación política').
+
+estado(katniss, viva).
+estado(peeta, vivo).
+estado(finnick, muerto).
+estado(johanna, viva).
+estado(rue, muerta).
+estado(haymitch, vivo).
+estado(mags, muerta).
+estado(coriolanus_snow, muerto).
+estado(lucy_gray, desconocido).
+
+rol(katniss, 'Protagonista principal').
+rol(peeta, 'Interés amoroso de Katniss').
+rol(finnick, 'Aliado de Katniss y Peeta').
+rol(johanna, 'Tributo del Distrito 7').
+rol(haymitch, 'Mentor de Katniss y Peeta').
+rol(rue, 'Aliada de Katniss').
+rol(beetee, 'Tributo y aliado tecnológico').
+rol(mags, 'Mentora y tributo del Distrito 4').
+rol(coriolanus_snow, 'Presidente de Panem').
+rol(lucy_gray, 'Protagonista de La Balada de Pájaros Cantores y Serpientes').
+
+participacion(katniss, 74, vencedora).
+participacion(peeta, 74, vencedor).
+participacion(finnick, 65, vencedor).
+participacion(johanna, 71, vencedora).
+participacion(rue, 74, muerta).
+participacion(haymitch, 50, vencedor).
+participacion(mags, 11, vencedora).
+participacion(lucy_gray, 10, vencedora).
+
+aliado(katniss, peeta).
+aliado(katniss, rue).
+aliado(katniss, haymitch).
+aliado(peeta, katniss).
+aliado(peeta, haymitch).
+aliado(finnick, katniss).
+aliado(finnick, peeta).
+aliado(finnick, mags).
+aliado(johanna, beetee).
+aliado(johanna, katniss).
+aliado(lucy_gray, coriolanus_snow).
+
+%ARBOL DE DATOS%
 
 % REGLAS FAMILIA%
 abuelos_paternos(X, Y) :- padrede(P, Y), padrede(X, P); (padrede(P, Y), madrede(X, P)). 
