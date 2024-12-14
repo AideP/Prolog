@@ -1,7 +1,8 @@
 eliza :-
     writeln('Hola, soy Eliza, tu chatbot.'),
     writeln('Actualmente tengo el conocimiento sobre: 
-        *   Arbol genealogico de la Familia Perez - Andrade'),
+        *   Arbol genealogico de la Familia Perez - Andrade
+        *   Los juegos del hambre'),
     writeln('Por favor, ingresa tu consulta (usa solo minusculas sin punto al final):'),
     read_line_as_list(Input),
     eliza(Input), !.
@@ -31,7 +32,7 @@ eliza(_) :-
 
 % Plantillas para consultas
 %          FAMILIA     %
-template([eliza, quien, es, el, hijo, de, s(_)], [flag_hijos], [6]).
+template([eliza, quien, es, hijo, de, s(_)], [flag_hijos], [5]).
 template([eliza, quien, es, el, padre, de, s(_)], [flag_padre], [6]).
 template([eliza, quien, es, la, madre, de, s(_)], [flag_madre], [6]).
 template([eliza, quienes, son, los, padres, de, s(_)], [flag_padres], [6]).
@@ -53,11 +54,16 @@ template([eliza, quienes, son, los, hermanos, de, s(_)], [flag_hermanos], [6]).
 
 %       ARBOL DE DATOS         %
 template([eliza, que, especialidad, tiene, el, distrito, s(_)], [flag_especialidad_distrito], [6]).
-template([eliza, que, habilidades, tiene, s(_)], [flag_habilidades], [4]).
-template([eliza, que, rol, tiene, s(_)], [flag_rol], [4]).
+template([eliza, que, habilidad, tiene, s(_)], [flag_habilidades], [4]).
 template([eliza, quienes, son, los, aliados, de, s(_)], [flag_aliados], [6]).
 template([eliza, en, que, juegos, participo, s(_)], [flag_participacion], [5]).
 template([eliza, que, distrito, tiene, la, especialidad, s(_)], [flag_distrito_especialidad], [6]).
+template([eliza, a, que, distrito, pertenece, s(_)], [flag_distrito_personaje], [5]).
+template([eliza, quienes, pertenecen, al, distrito, s(_)],[flag_residentes_distrito],[5]).
+template([eliza, quienes, murieron, en, los, juegos, del, hambre], [flag_muertos], []).
+template([eliza, quienes, sobrevivieron, en, los, juegos, del, hambre], [flag_vivos], []).
+
+
 %       ARBOL DE DATOS         %
 
 
@@ -188,16 +194,99 @@ replace0([I|_], Input, _, Resp, R) :-
 
 %   RESPUESTAS ARBOL DE DATOS   %
 replace0([I|_], Input, _, Resp, R) :-
+    nth0(I, Input, DistritoAtom),  
+    ( atom_number(DistritoAtom, Distrito) ; DistritoAtom = Distrito ),
+    Resp = [flag_especialidad_distrito | _],
+    especialidad_distrito(Distrito, Especialidad), 
+    format(atom(R), 'El distrito ~w se especializa en: ~w.', [Distrito, Especialidad]), !.
+
+replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom), 
     Resp = [flag_participacion | _],
     participacion(Atom, Juegos, Resultado),
     format(atom(R), '~w participo en los Juegos del Hambre numero ~w y fue ~w.', [Atom, Juegos, Resultado]), !.
 
-    replace0([I|_], Input, _, Resp, R) :-
-        nth0(I, Input, Distrito), 
-        Resp = [flag_especialidad_distrito | _],
-        especialidad_distrito(Distrito, Especialidad),
-        format(atom(R), 'El distrito ~w se especializa en: ~w.', [Distrito, Especialidad]), !.
+replace0([I|_], Input, _, Resp, R) :-
+    nth0(I, Input, PersonajeAtom), 
+    Resp = [flag_distrito_personaje | _],
+    distrito_pertenece(PersonajeAtom, Distrito),  
+    nombre(PersonajeAtom, Nombre), 
+    format(atom(R), '~w pertenece al distrito ~w.', [Nombre, Distrito]), !.
+
+replace0([I|_], Input, _, Resp, R) :-
+    nth0(I, Input, DistritoAtom),
+    ( atom_number(DistritoAtom, Distrito) ; DistritoAtom = Distrito ),
+    Resp = [flag_residentes_distrito | _],
+    findall(Personaje, distrito_pertenece(Personaje, Distrito), Residentes),
+    maplist(nombre, Residentes, NombresResidentes),
+    atomic_list_concat(NombresResidentes, ', ', ResidentesStr),
+    format(atom(R), 'En el distrito ~w estan: ~w.', [Distrito, ResidentesStr]), !.
+
+replace0([I|_], Input, _, Resp, R) :-
+    nth0(I, Input, Especialidad), 
+    Resp = [flag_distrito_especialidad | _],
+    findall(Distrito, especialidad_distrito(Distrito, Especialidad), Distritos), 
+    ( Distritos \= [] ->
+        atomic_list_concat(Distritos, ', ', DistritosStr),
+        format(atom(R), 'La especialidad ~w pertenece a los distritos: ~w.', [Especialidad, DistritosStr])
+    ;
+        format(atom(R), 'No se encontraron distritos con la especialidad: ~w.', [Especialidad])
+    ), !.
+
+replace0([I|_], Input, _, Resp, R) :-
+    nth0(I, Input, PersonajeAtom),  
+    Resp = [flag_participacion | _],
+    participacion(PersonajeAtom, Juegos, Resultado), 
+    nombre(PersonajeAtom, Nombre),  
+    format(atom(R), '~w participo en los juegos del hambre numero ~w y fue ~w.', [Nombre, Juegos, Resultado]), !.
+
+replace0([I|_], Input, _, Resp, R) :-
+    nth0(I, Input, PersonajeAtom), 
+    Resp = [flag_aliados | _],
+    findall(Aliado, aliado(PersonajeAtom, Aliado), Aliados),  
+    nombre(PersonajeAtom, Nombre), 
+    maplist(nombre, Aliados, NombresAliados),  
+    ( NombresAliados \= [] ->
+        atomic_list_concat(NombresAliados, ', ', AliadosStr),
+        format(atom(R), 'Los aliados de ~w son: ~w.', [Nombre, AliadosStr])
+    ;
+        format(atom(R), '~w no tiene aliados conocidos.', [Nombre])
+    ), !.
+
+replace0([I|_], Input, _, Resp, R) :-
+    nth0(I, Input, PersonajeAtom), 
+    Resp = [flag_habilidades | _],
+    habilidad(PersonajeAtom, Habilidad),  
+    nombre(PersonajeAtom, Nombre), 
+    format(atom(R), '~w tiene la habilidad de: ~w.', [Nombre, Habilidad]), !.
+            
+replace0(_, _, _, [flag_muertos | _], R) :-
+    findall(Nombre, (estado(Personaje, Estado), 
+    (Estado = muerto ; Estado = muerta), 
+    nombre(Personaje, Nombre)), 
+    Muertos),
+    ( Muertos \= [] ->
+        atomic_list_concat(Muertos, ', ', MuertosStr),
+        format(atom(R), 'Los personajes que murieron son: ~w.', [MuertosStr])
+    ;
+        format(atom(R), 'No se encontraron personajes que hayan muerto.')
+    ), !.
+                
+replace0(_, _, _, [flag_vivos | _], R) :-
+    findall(Nombre, (estado(Personaje, Estado), 
+    (Estado = viva ; Estado = vivo), 
+     nombre(Personaje, Nombre)), 
+    Vivos),
+    ( Vivos \= [] ->
+        atomic_list_concat(Vivos, ', ', VivosStr),
+        format(atom(R), 'Los personajes que sobrevivieron son: ~w.', [VivosStr])
+    ;
+        format(atom(R), 'No se encontraron personajes que hayan sobrevivido.')
+    ), !.
+                                          
+    
+        
+ 
     
 %   RESPUESTAS ARBOL DE DATOS   %
 
@@ -323,6 +412,12 @@ personaje(coriolanus_snow).
 personaje(sejanus).
 personaje(tigris).
 personaje(caesar_flickerman).
+personaje(foxface).
+personaje(clove).
+personaje(cato).
+personaje(gale).
+personaje(glimmer).
+
 
 distrito(1).
 distrito(2).
@@ -336,12 +431,13 @@ distrito(9).
 distrito(10).
 distrito(11).
 distrito(12).
+distrito(capitolio).
 
 nombre(katniss, 'Katniss Everdeen').
 nombre(peeta, 'Peeta Mellark').
 nombre(finnick, 'Finnick Odair').
 nombre(johanna, 'Johanna Mason').
-nombre(snow, 'Presidente Snow').
+nombre(snow, 'Presidente Snow/ Coriolanus Snow').
 nombre(lucy_gray, 'Lucy Gray Baird').
 nombre(haymitch, 'Haymitch Abernathy').
 nombre(rue, 'Rue').
@@ -351,47 +447,69 @@ nombre(beetee, 'Beetee Latier').
 nombre(mags, 'Mags').
 nombre(coin, 'Alma Coin').
 nombre(prim, 'Primrose Everdeen').
-nombre(coriolanus_snow, 'Coriolanus Snow').
 nombre(sejanus, 'Sejanus Plinth').
 nombre(tigris, 'Tigris').
 nombre(caesar_flickerman, 'Caesar Flickerman').
+nombre(foxface, 'Foxface').
+nombre(clove,'Clove').
+nombre(cato,'Cato').
+nombre(gale,'Gale').
+nombre(glimmer,'Glimmer').
 
-especialidad_distrito(1, 'Productos de lujo').
-especialidad_distrito(2, 'Armamento y fuerzas militares').
-especialidad_distrito(3, 'Tecnología y electricidad').
-especialidad_distrito(4, 'Pesca').
-especialidad_distrito(5, 'Energía').
-especialidad_distrito(6, 'Transporte').
-especialidad_distrito(7, 'Madera y papel').
-especialidad_distrito(8, 'Textiles').
-especialidad_distrito(9, 'Granos y agricultura').
-especialidad_distrito(10, 'Ganadería').
-especialidad_distrito(11, 'Agricultura').
-especialidad_distrito(12, 'Minería de carbón').
-especialidad_distrito(13, 'Armamento nuclear y gobierno subterráneo').
+especialidad_distrito(1, 'productos de lujo').
+especialidad_distrito(2, 'armamento y fuerzas militares').
+especialidad_distrito(3, 'tecnologia y electricidad').
+especialidad_distrito(4, 'pesca').
+especialidad_distrito(5, 'energia').
+especialidad_distrito(6, 'transporte').
+especialidad_distrito(7, 'madera y papel').
+especialidad_distrito(8, 'textiles').
+especialidad_distrito(9, 'granos y agricultura').
+especialidad_distrito(10, 'ganaderia').
+especialidad_distrito(11, 'agricultura').
+especialidad_distrito(12, 'mineria de carbon').
+especialidad_distrito(13, 'armamento nuclear y gobierno subterraneo').
+especialidad_distrito(capitolio, 'entretenimiento').
 
 distrito_pertenece(katniss, 12).
 distrito_pertenece(peeta, 12).
 distrito_pertenece(finnick, 4).
 distrito_pertenece(johanna, 7).
+distrito_pertenece(snow, capitolio).
+distrito_pertenece(lucy_gray, 12).
+distrito_pertenece(haymitch, 12).
 distrito_pertenece(rue, 11).
+distrito_pertenece(cinna, capitolio).
+distrito_pertenece(effie, capitolio).
 distrito_pertenece(beetee, 3).
 distrito_pertenece(mags, 4).
-distrito_pertenece(haymitch, 12).
-distrito_pertenece(lucy_gray, 12).
-distrito_pertenece(coriolanus_snow, capitolio).
+distrito_pertenece(coin, 13).
+distrito_pertenece(prim, 12).
 distrito_pertenece(sejanus, capitolio).
 distrito_pertenece(tigris, capitolio).
+distrito_pertenece(caesar_flickerman, capitolio).
+distrito_pertenece(foxface,5).
+distrito_pertenece(clove,2).
+distrito_pertenece(cato,2).
+distrito_pertenece(glimmer,1).
 
-habilidad(katniss, 'Arco y flecha').
+habilidad(katniss, 'arco y flecha').
 habilidad(peeta, camuflaje).
-habilidad(finnick, 'Lucha con tridente').
+habilidad(finnick, tridente).
 habilidad(johanna, sigilo).
-habilidad(haymitch, 'Estrategia y manipulación').
-habilidad(rue, 'Escalar árboles y sigilo').
-habilidad(beetee, 'Ingeniería eléctrica').
-habilidad(mags, 'Supervivencia y pesca').
-habilidad(coriolanus_snow, 'Manipulación política').
+habilidad(haymitch, estrategia).
+habilidad(rue, sigilo).
+habilidad(beetee, 'ingenieria electrica').
+habilidad(mags, pesca).
+habilidad(coriolanus_snow, manipulacion).
+habilidad(coin,manipulacion).
+habilidad(gale, caza).
+habilidad(prim, medicina).
+habilidad(foxface, sigilo).
+habilidad(clove, cuchillos).
+habilidad(cato, combate).
+habilidad(glimmer, carisma).
+
 
 estado(katniss, viva).
 estado(peeta, vivo).
@@ -402,38 +520,84 @@ estado(haymitch, vivo).
 estado(mags, muerta).
 estado(coriolanus_snow, muerto).
 estado(lucy_gray, desconocido).
+estado(gale, vivo).
+estado(prim, muerta).
+estado(foxface, muerta).
+estado(clove, muerta).
+estado(cato, muerto).
+estado(glimmer, muerta).
+estado(beetee,vivo).
+estado()
 
-rol(katniss, 'Protagonista principal').
-rol(peeta, 'Interés amoroso de Katniss').
-rol(finnick, 'Aliado de Katniss y Peeta').
-rol(johanna, 'Tributo del Distrito 7').
-rol(haymitch, 'Mentor de Katniss y Peeta').
-rol(rue, 'Aliada de Katniss').
-rol(beetee, 'Tributo y aliado tecnológico').
-rol(mags, 'Mentora y tributo del Distrito 4').
-rol(coriolanus_snow, 'Presidente de Panem').
-rol(lucy_gray, 'Protagonista de La Balada de Pájaros Cantores y Serpientes').
+personaje(katniss,viva).
+personaje(peeta,vivo).
+personaje(finnick,vivo).
+personaje(johanna,viva).
+personaje(snow,muerto).
+personaje(lucy_gray,desconocido).
+personaje(haymitch,vivo).
+personaje(rue,muerta).
+personaje(cinna,desconocido).
+personaje(effie,viva).
+personaje(beetee,vivo).
+personaje(mags,muerta).
+personaje(coin,muerta).
+personaje(prim,muerta).
+personaje(sejanus,muerto).
+personaje(tigris,viva).
+personaje(caesar_flickerman,desconocido).
+personaje(foxface,muerta).
+personaje(clove,muerta).
+personaje(cato,muerto).
+personaje(gale,vivo).
+personaje(glimmer,muerta).
 
 participacion(katniss, 74, vencedora).
 participacion(peeta, 74, vencedor).
 participacion(finnick, 65, vencedor).
 participacion(johanna, 71, vencedora).
-participacion(rue, 74, muerta).
+participacion(rue, 74, asesinada).
 participacion(haymitch, 50, vencedor).
 participacion(mags, 11, vencedora).
 participacion(lucy_gray, 10, vencedora).
+participacion(clove, 74, muerta).
+participacion(cato, 74, finalista).
+participacion(foxface, 74, muerta).
+participacion(glimmer, 74, muerta).
+
 
 aliado(katniss, peeta).
 aliado(katniss, rue).
+aliado(katniss,finnick).
+aliado(katniss,johanna).
 aliado(katniss, haymitch).
+aliado(katniss,mags).
+aliado(katniss,effie).
+aliado(katniss,cinna).
+aliado(katniss,beetee).
+aliado(beetee, finnick).
+aliado(beetee, johanna).
 aliado(peeta, katniss).
 aliado(peeta, haymitch).
+aliado(peeta, finnick).
+aliado(peeta,johanna).
+aliado(peeta,haymitch).
+aliado(peeta,effie).
+aliado(peeta,beetee).
+aliado(haymitch, effie).
+aliado(glimmer, cato).
+aliado(clove, cato).
 aliado(finnick, katniss).
 aliado(finnick, peeta).
 aliado(finnick, mags).
+aliado(finnick, johanna).
+aliado(finnick, haymitch).
+aliado(finnick,beetee).
 aliado(johanna, beetee).
 aliado(johanna, katniss).
-aliado(lucy_gray, coriolanus_snow).
+aliado(johanna,peeta).
+aliado(johanna,finnick).
+aliado(lucy_gray, snow).
 
 %ARBOL DE DATOS%
 
@@ -461,3 +625,7 @@ cunado(X, Y) :- hermanos(X, Z), (esposa(Z, Y); esposo(Z, Y)); esposo(X, Z), herm
 primos(X, Y) :- padrede(P1, X), hermanos(P1, P2), padrede(P2, Y); madrede(M1, X), hermanos(M1, M2), madrede(M2, Y); padrede(P, X), madrede(M1, Y), hermanos(P, M1); madrede(M, X), padrede(P1, Y), hermanos(M, P1).
 
 % REGLAS FAMILIA%   
+
+% REGLAS ARBOL DE DATOS%
+
+personajes_muertos(Lista) :- findall(Personaje, (estado(Personaje, muerto)), Lista).
