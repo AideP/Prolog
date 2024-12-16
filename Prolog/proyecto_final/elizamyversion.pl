@@ -31,6 +31,56 @@ eliza(_) :-
 
 
 % Plantillas para consultas
+% ELIZA ORGINAL DADA POR EL PROFE%
+template([hola, mi, nombre, es, s(_), '.'], ['Hola', 0, 'Como', estas, tu, '?'], [4]).
+template([buendia, mi, nombre, es, s(_), '.'], ['buen dia', 'Como', estas, tu, 0, '?'], [4]).
+
+template([hola, ',', mi, nombre, es, s(_), '.'], ['Hola', 0, 'Como', estas, tu, '?'], [5]).
+template([buendia, ',', mi, nombre, es, s(_), '.'], ['Buendia', 'Como', estas, tu, 0, '?'], [5]).
+
+template([hola, _], ['Hola', 'como', estas, tu, '?'], []).
+template([buendia, _], ['Buendia', 'Como', estas, tu, '?'], []).
+
+template([yo, s(_), yo, soy, s(_),'.'], [por, que, 0, eres, 1, '?'], [1, 4]).
+template([yo, s(_), tu, '.'], [why, do, you, 0, me ,'?'], [1]).
+template([yo, soy, s(_),'.'], [porque, eres, tu, 0, '?'], [2]).
+
+% pregunta algo que le gusta a eliza
+template([te, gustan, las, s(_), _], [flagLike], [3]).
+template([te, gustan, los, s(_), _], [flagLike], [3]).
+
+% pregunta algo que hace eliza
+template([tu, eres, s(_), _], [flagDo], [2]).
+% pregunta algo que es eliza
+template([que, eres, tu, s(_)], [flagIs], [2]).
+template([eres, s(_), '?'], [flagIs], [2]).
+
+template([como, estas, tu, '?'], [yo, estoy, bien, ',', gracias, por, preguntar, '.'], []).
+
+template([yo, pienso, que, _], [bueno, esa, es, tu, opinion], []).
+template([porque, _], [esa, no, es, una, buena, razon, '.'], []).
+template([i, have, s(_), with, s(_), '.'], ['You', have, to, deal, with, your, 0, and, your, 1, in, a, mature, way, '.'], [2, 4]).
+template([i, s(_),  _], [i, can, recommend, you, a, book, about, that, issue], []).
+template([please, s(_), _], ['No', i, can, not, help, ',', i, am, just, a, machine], []). 
+template([tell, me, a, s(_), _], ['No', i, can, not, ',', i, am, bad, at, that], []).
+%ELIZA ORIGINAL DADA POR EL PROFE%
+
+%PRUEBAS CON ELIZA%
+template([mi, jugador, favorito, de, los, chiefs, es, s(_), '.'], ['Increible!', 0, es, un, gran, jugador, '!'], [7]).
+template([mi, cancion, favorita, de, taylor, swift, es, s(_), '.'], ['Wow!', 0, es, una, gran, cancion, '!'], [7]).
+template([me, encanta, el, album, s(_), de, taylor, swift], [0, es, un, gran, album, tiene, canciones, increibles, '!'], [4]).
+template([s(_), es, mi, cancion, favorita, '.'], [esa, cancion, 0, tambien, es, mi, favorita, siempre, me, emociona, '!'], [0]).
+template([s(_), tiene, las, mejores, letras, en, sus, canciones, '!'], [estoy, de, acuerdo, 0, es, una, gran, compositora, '!'], [0]).
+template([s(_), tiene, las, mejores, frases, en, modern, family, '.'], ['Jajaja!', 0, siempre, dice, cosas, epicas, '!'], [0]).
+template([mi, personaje, favorito, de, greys, anatomy, es, s(_), '.'], ['Genial!', 0, es, un, gran, personaje, '¿', por, que, te, gusta, '?'], [7]).
+template([s(_), es, el, mejor, doctor, en, greys, anatomy, '!'], [estoy, de, acuerdo, 0, salva, muchas, vidas, '!'], [0]).
+template([mi, pareja, favorita, de, greys, anatomy, es, s(_), y, s(_), '.'], [amo, a, 0, y, a, 1, '¿', cual, es, tu, capitulo, favorito, con, ellos, '?'], [7, 9]).
+template([s(_), tuvo, un, gran, desarrollo, en, greys, anatomy, '.'], [es, verdad, 0, tuvo, momentos, increibles, '.'], [0]).
+template([extraño, a, s(_), en, greys, anatomy, '.'], [si, 0, fue, un, gran, personaje, y, nos, dejo, buenos, momentos, '.'], [2]).
+
+
+
+%PRUEBAS CON ELIZA%
 %          FAMILIA     %
 template([eliza, quien, es, hijo, de, s(_)], [flag_hijos], [5]).
 template([eliza, quien, es, el, padre, de, s(_)], [flag_padre], [6]).
@@ -50,6 +100,10 @@ template([eliza, quienes, son, las, tias, mujeres, de, s(_)], [flag_tias_mujeres
 template([eliza, quien, es, el, cunado, de, s(_)], [flag_cunado], [6]).
 template([eliza, quienes, son, los, primos, de, s(_)], [flag_primos], [6]).
 template([eliza, quienes, son, los, hermanos, de, s(_)], [flag_hermanos], [6]).
+
+template([eliza, dime, si, s(_), es, esposo, de, s(_)], [flag_esposo_de], [3, 7]).
+template([eliza, dime,si, s(_), es, esposa, de, s(_)], [flag_esposa_de], [3, 7]).
+
 %         FAMILIA     %
 
 %       ARBOL DE DATOS         %
@@ -62,7 +116,18 @@ template([eliza, a, que, distrito, pertenece, s(_)], [flag_distrito_personaje], 
 template([eliza, quienes, pertenecen, al, distrito, s(_)],[flag_residentes_distrito],[5]).
 template([eliza, quienes, murieron, en, los, juegos, del, hambre], [flag_muertos], []).
 template([eliza, quienes, sobrevivieron, en, los, juegos, del, hambre], [flag_vivos], []).
+template([eliza, quienes, son, los, enemigos, de, s(_)], [flag_enemigos], [6]).
+template([eliza, quienes, ganaron, los, juegos, del, hambre], [flag_ganadores], []).
+template([eliza, quienes, son, del, mismo, distrito, que, s(_)], [flag_mismo_distrito], [7]).
+template([eliza, quienes, tienen, habilidades, similares, a, s(_)], [flag_habilidades_similares], [6]).
+template([eliza, quienes, sobrevivieron, en, los, juegos, numero, s(_)], [flag_sobrevivientes_juegos], [7]).
+template([eliza, quien, fue, mentor, de, s(_)], [flag_mentor], [5]).
+template([eliza, quienes, sobrevivieron, en, los, juegos, numero, s(_)], [flag_sobrevivientes_juegos], [7]).
+template([eliza, s(_), vive, '?'], [flag_vive], [1]).
 
+template([eliza, s(_), y, s(_), son, del, mismo, distrito, '?'], [flag_mismo_distrito_dos], [1, 3]).
+template([eliza, s(_), y, s(_), son, aliados, '?'], [flag_son_aliados], [1, 3]).
+template([eliza, s(_), y, s(_), son, enemigos, '?'], [flag_son_enemigos], [1, 3]).
 
 %       ARBOL DE DATOS         %
 
@@ -77,6 +142,42 @@ match([S|Stim], [_|Input]) :-
     match(Stim, Input), !.
 
 % Respuestas específicas según la consulta
+
+%RESPUESTAS DADAS POR EL PROFE%
+% Eliza likes:
+replace0([I|_], Input, _, Resp, R):-
+	nth0(I, Input, Atom),
+	nth0(0, Resp, X),
+	X == flagLike,
+	elizaLikes(Atom, R).
+
+% Eliza does:
+replace0([I|_], Input, _, Resp, R):-
+	nth0(I, Input, Atom),
+	nth0(0, Resp, X),
+	X == flagDo,
+	elizaDoes(Atom, R).
+
+% Eliza is:
+replace0([I|_], Input, _, Resp, R):-
+	nth0(I, Input, Atom),
+	nth0(0, Resp, X),
+	X == flagIs,
+	elizaIs(Atom, R).
+
+replace0([I|Index], Input, N, Resp, R):-
+	length(Index, M), M =:= 0,
+	nth0(I, Input, Atom),
+	select(N, Resp, Atom, R1), append(R1, [], R),!.
+
+replace0([I|Index], Input, N, Resp, R):-
+	nth0(I, Input, Atom),
+	length(Index, M), M > 0,
+	select(N, Resp, Atom, R1),
+	N1 is N + 1,
+	replace0(Index, Input, N1, R1, R),!.
+%RESPUESTAS DADAS POR EL PROFE%
+
 %RESPUESTAS PADRES%
 
 replace0([I|_], Input, _, Resp, R) :-
@@ -87,7 +188,7 @@ replace0([I|_], Input, _, Resp, R) :-
         atomic_list_concat(Hijos, ', ', HijosStr),
         format(atom(R), 'Los hijos de ~w son ~w.', [Atom, HijosStr])
     ;
-        format(atom(R), ' ~w no tiene hijos.', [Atom])
+        format(atom(R), '~w no tiene hijos.', [Atom])
     ), !.
 
 
@@ -99,10 +200,8 @@ replace0([I|_], Input, _, Resp, R) :-
         atomic_list_concat(Padres, ', ', PadresStr),
         format(atom(R), 'El padre de ~w es ~w.', [Atom, PadresStr])
     ;
-        format(atom(R), ' ~w no tiene un padre conocido.', [Atom])
+        format(atom(R), '~w no tiene un padre conocido.', [Atom])
     ), !.
-
-
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
@@ -110,48 +209,84 @@ replace0([I|_], Input, _, Resp, R) :-
     findall(X, madrede(X, Atom), Madres),
     ( Madres \= [] ->
         atomic_list_concat(Madres, ', ', MadresStr),
-        format(atom(R), 'La madre de ~w es: ~w.', [Atom, MadresStr])
+        format(atom(R), 'La madre de ~w es ~w.', [Atom, MadresStr])
         ;
-        format(atom(R), 'Lo siento, no se encontró una madre para ~w.', [Atom])
+        format(atom(R), '~w no tiene una madre conocida.', [Atom])
     ), !.
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_padres | _],
-    findall(X, padres(X, Atom), Results),
-    format_response('padres', Atom, Results, R), !.
+    findall(X, padres(X, Atom), Papas),
+    (Papas \= [] ->
+        atomic_list_concat(Papas,', ', PapasStr),
+        format(atom(R), 'Los padres de ~w son ~w', [Atom, PapasStr])
+        ;
+        format(atom(R), '~w no tiene padres conocidos.',[Atom])
+        
+        ), !.
 %RESPUESTAS PADRES%
 
 %RESPUESTAS ABUELOS%
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_abuelos_paternos | _],
-    findall(X, (abuelos_paternos(X, Atom)), Results),
-    format_response('abuelos paternos', Atom, Results, R), !.
+    findall(X, (abuelos_paternos(X, Atom)), AbueloP),
+    (AbueloP \= [] ->
+        atomic_list_concat(AbueloP,', ', AbueloPStr),
+        format(atom(R), 'Los abuelos paternos de ~w son ~w', [Atom, AbueloPStr])
+        ;
+        format(atom(R), '~w no tiene abuelos paternos conocidos.',[Atom])
+        
+    ), !.
     
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_abuelos_maternos | _],
-    findall(X, (abuelos_maternos(X, Atom)), Results),
-    format_response('abuelos maternos', Atom, Results, R), !.
+    findall(X, (abuelos_maternos(X, Atom)), AbueloM),
+    (AbueloM \= [] ->
+        atomic_list_concat(AbueloM,', ', AbueloMStr),
+        format(atom(R), 'Los abuelos maternos de ~w son ~w', [Atom, AbueloMStr])
+        ;
+        format(atom(R), '~w no tiene abuelos maternos conocidos.',[Atom])
+        
+    ), !.
     
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_abuelos | _],
-    findall(X, (abuelos(X, Atom)), Results),
-    format_response('abuelos', Atom, Results, R), !.
+    findall(X, (abuelos(X, Atom)), Abuelos),
+    (Abuelos \= [] ->
+        atomic_list_concat(Abuelos,', ', AbuelosStr),
+        format(atom(R), 'Los abuelos de ~w son ~w', [Atom, AbuelosStr])
+        ;
+        format(atom(R), '~w no tiene abuelos registrados.',[Atom])
+        
+    ), !.
     
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_abuelos_hombres | _],
-    findall(X, abuelo(X, Atom), Results),
-    format_response('abuelos hombres', Atom, Results, R), !.
+    findall(Y, abuelo(Y, Atom), AbuelosH),
+    (AbuelosH \= [] ->
+        atomic_list_concat(AbuelosH,', ', AbuelosHStr),
+        format(atom(R), 'Los abuelos hombres de ~w son ~w', [Atom, AbuelosHStr])
+        ;
+        format(atom(R), '~w no tiene abuelos hombres conocidos.',[Atom])
+        
+    ), !.
     
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_abuelas_mujeres | _],
     findall(X, abuela(X, Atom), Results),
-    format_response('abuelas mujeres', Atom, Results, R), !.
+    (Results \= [] ->
+        atomic_list_concat(Results,', ', ResultsStr),
+        format(atom(R), 'Las abuelas mujeres de ~w son ~w', [Atom, ResultsStr])
+        ;
+        format(atom(R), '~w no tiene abuelas mujeres conocidas.',[Atom])
+        
+    ), !.
  %RESPUESTAS ABUELOS%   
 
 %RESPUESTAS TIOS%
@@ -159,38 +294,98 @@ replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_tios | _],
     findall(X, tios(X, Atom), Results),
-    format_response('tios', Atom, Results, R), !.
+    (Results \= [] ->
+        atomic_list_concat(Results,', ', ResultsStr),
+        format(atom(R), 'Los tios de ~w son ~w', [Atom, ResultsStr])
+        ;
+        format(atom(R), '~w no tiene tios conocidos.',[Atom])
+        
+    ), !.
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_tios_hombres | _],
     findall(X, tios_hombres(X, Atom), Results),
-    format_response('tios hombres', Atom, Results, R), !.
+    (Results \= [] ->
+        atomic_list_concat(Results,', ', ResultsStr),
+        format(atom(R), 'Los tios hombres de ~w son ~w', [Atom, ResultsStr])
+        ;
+        format(atom(R), '~w no tiene tios hombres.',[Atom])
+        
+    ), !.
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_tias_mujeres | _],
     findall(X, tias_mujeres(X, Atom), Results),
-    format_response('tias mujeres', Atom, Results, R), !.
+    (Results \= [] ->
+        atomic_list_concat(Results,', ', ResultsStr),
+        format(atom(R), 'Las tias mujeres de ~w son ~w', [Atom, ResultsStr])
+        ;
+        format(atom(R), '~w no tiene tias mujeres.',[Atom])
+        
+    ), !.
 %RESPUESTAS TIOS%
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_cunado | _],
     findall(Y, cunado(Atom, Y), Results),
-    format_response('cunados', Atom, Results, R), !.
+    (Results \= [] ->
+        atomic_list_concat(Results,', ', ResultsStr),
+        format(atom(R), 'Los cunados de ~w son ~w', [Atom, ResultsStr])
+        ;
+        format(atom(R), '~w no tiene cunados.',[Atom])
+        
+    ), !.
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_primos | _],
     findall(Y, primos(Atom, Y), Results),
-    format_response('primos', Atom, Results, R), !.
+    (Results \= [] ->
+        atomic_list_concat(Results,', ', ResultsStr),
+        format(atom(R), 'Los primos de ~w son ~w', [Atom, ResultsStr])
+        ;
+        format(atom(R), '~w no tiene primos.',[Atom])
+        
+    ), !.
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Atom),
     Resp = [flag_hermanos | _],
     findall(Y, hermanos(Atom, Y), Results),
-    format_response('hermanos', Atom, Results, R), !.
+    (Results \= [] ->
+        atomic_list_concat(Results,', ', ResultsStr),
+        format(atom(R), 'Los hermanos de ~w son ~w', [Atom, ResultsStr])
+        ;
+        format(atom(R), '~w no tiene hermanos.',[Atom])
+        
+    ), !.
+
+% Esposos %
+replace0([I, J | _], Input, _, Resp, R) :-
+    nth0(I, Input, Persona1),  
+    nth0(J, Input, Persona2),  
+    Resp = [flag_esposo_de | _],
+    ( esposo(Persona1, Persona2) ->
+        format(atom(R), 'Si, ~w es esposo de ~w.', [Persona1, Persona2])
+    ;
+        format(atom(R), 'No, ~w no es esposo de ~w.', [Persona1, Persona2])
+    ), !.
+
+replace0([I, J | _], Input, _, Resp, R) :-
+    nth0(I, Input, Persona1),
+    nth0(J, Input, Persona2),
+    Resp = [flag_esposa_de | _],
+    ( esposa(Persona1, Persona2) ->
+        format(atom(R), 'Si, ~w es esposa de ~w.', [Persona1, Persona2])
+    ;
+        format(atom(R), 'No, ~w no es esposa de ~w.', [Persona1, Persona2])
+    ), !.
+
+% Esposos %         
+            
 
 %   RESPUESTAS ARBOL DE DATOS   %
 replace0([I|_], Input, _, Resp, R) :-
@@ -198,13 +393,19 @@ replace0([I|_], Input, _, Resp, R) :-
     ( atom_number(DistritoAtom, Distrito) ; DistritoAtom = Distrito ),
     Resp = [flag_especialidad_distrito | _],
     especialidad_distrito(Distrito, Especialidad), 
-    format(atom(R), 'El distrito ~w se especializa en: ~w.', [Distrito, Especialidad]), !.
+    format(atom(R), 'El distrito ~w se especializa en ~w.', [Distrito, Especialidad]), !.
 
 replace0([I|_], Input, _, Resp, R) :-
-    nth0(I, Input, Atom), 
+    nth0(I, Input, PersonajeAtom),  
     Resp = [flag_participacion | _],
-    participacion(Atom, Juegos, Resultado),
-    format(atom(R), '~w participo en los Juegos del Hambre numero ~w y fue ~w.', [Atom, Juegos, Resultado]), !.
+    findall([Juegos, Resultado], participacion(PersonajeAtom, Juegos, Resultado), Participaciones),
+    nombre(PersonajeAtom, Nombre),  
+    (Participaciones \= [] ->
+        format_participaciones(Participaciones, ParticipacionesStr),
+        format(atom(R), '~w participo en los Juegos del Hambre ~w.', [Nombre, ParticipacionesStr])
+    ;
+        format(atom(R), '~w no participo en la arena de los juegos.', [Nombre])
+    ), !.
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, PersonajeAtom), 
@@ -220,7 +421,7 @@ replace0([I|_], Input, _, Resp, R) :-
     findall(Personaje, distrito_pertenece(Personaje, Distrito), Residentes),
     maplist(nombre, Residentes, NombresResidentes),
     atomic_list_concat(NombresResidentes, ', ', ResidentesStr),
-    format(atom(R), 'En el distrito ~w estan: ~w.', [Distrito, ResidentesStr]), !.
+    format(atom(R), 'En el distrito ~w viven ~w.', [Distrito, ResidentesStr]), !.
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, Especialidad), 
@@ -228,17 +429,30 @@ replace0([I|_], Input, _, Resp, R) :-
     findall(Distrito, especialidad_distrito(Distrito, Especialidad), Distritos), 
     ( Distritos \= [] ->
         atomic_list_concat(Distritos, ', ', DistritosStr),
-        format(atom(R), 'La especialidad ~w pertenece a los distritos: ~w.', [Especialidad, DistritosStr])
+        format(atom(R), 'La especialidad ~w pertenece al distrito ~w.', [Especialidad, DistritosStr])
     ;
-        format(atom(R), 'No se encontraron distritos con la especialidad: ~w.', [Especialidad])
+        format(atom(R), 'No existen distritos con ~w como especialidad.', [Especialidad])
     ), !.
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, PersonajeAtom),  
-    Resp = [flag_participacion | _],
-    participacion(PersonajeAtom, Juegos, Resultado), 
+    Resp = [flag_vive | _],        
+    estado(PersonajeAtom, Estado),  
     nombre(PersonajeAtom, Nombre),  
-    format(atom(R), '~w participo en los juegos del hambre numero ~w y fue ~w.', [Nombre, Juegos, Resultado]), !.
+    (Estado == vivo ->
+        format(atom(R), 'Si, ~w esta vivo y feliz despues de la derrota del presidente Snow.', [Nombre])
+    ; Estado == viva ->
+        format(atom(R), 'Si, ~w esta viva y feliz despues de la derrota del presidente Snow.', [Nombre])
+    ; Estado == muerto ->
+        format(atom(R), 'No, ~w fue asesinado cruelmente, tenia mas por vivir (en este chat no queremos al presidente Snow).', [Nombre])
+    ; Estado == muerta ->
+        format(atom(R), 'No, ~w fue asesinada cruelmente, tenia mas por vivir (en este chat no queremos al presidente Snow).', [Nombre])
+    ; Estado == desconocido ->
+        format(atom(R), 'El estado de ~w es desconocido, esperemos el siguiente libro por pistas.', [Nombre])
+    ;  
+        format(atom(R), 'Lo siento, no tengo informacion sobre el estado de ~w, tendre que leer los libros de nuevo.', [Nombre])
+    ), !.
+    
 
 replace0([I|_], Input, _, Resp, R) :-
     nth0(I, Input, PersonajeAtom), 
@@ -248,9 +462,9 @@ replace0([I|_], Input, _, Resp, R) :-
     maplist(nombre, Aliados, NombresAliados),  
     ( NombresAliados \= [] ->
         atomic_list_concat(NombresAliados, ', ', AliadosStr),
-        format(atom(R), 'Los aliados de ~w son: ~w.', [Nombre, AliadosStr])
+        format(atom(R), 'Los aliados de ~w son ~w, ¿dream team? .', [Nombre, AliadosStr])
     ;
-        format(atom(R), '~w no tiene aliados conocidos.', [Nombre])
+        format(atom(R), '~w no tiene aliados.', [Nombre])
     ), !.
 
 replace0([I|_], Input, _, Resp, R) :-
@@ -258,7 +472,7 @@ replace0([I|_], Input, _, Resp, R) :-
     Resp = [flag_habilidades | _],
     habilidad(PersonajeAtom, Habilidad),  
     nombre(PersonajeAtom, Nombre), 
-    format(atom(R), '~w tiene la habilidad de: ~w.', [Nombre, Habilidad]), !.
+    format(atom(R), '~w tiene la habilidad de ~w.', [Nombre, Habilidad]), !.
             
 replace0(_, _, _, [flag_muertos | _], R) :-
     findall(Nombre, (estado(Personaje, Estado), 
@@ -267,9 +481,9 @@ replace0(_, _, _, [flag_muertos | _], R) :-
     Muertos),
     ( Muertos \= [] ->
         atomic_list_concat(Muertos, ', ', MuertosStr),
-        format(atom(R), 'Los personajes que murieron son: ~w.', [MuertosStr])
+        format(atom(R), 'Los personajes que murieron son ~w, siempre viviran en nuestros corazones *Are you....Are you*.', [MuertosStr])
     ;
-        format(atom(R), 'No se encontraron personajes que hayan muerto.')
+        format(atom(R), 'No hay personajes muertos, todos vivieron felices :).')
     ), !.
                 
 replace0(_, _, _, [flag_vivos | _], R) :-
@@ -279,27 +493,132 @@ replace0(_, _, _, [flag_vivos | _], R) :-
     Vivos),
     ( Vivos \= [] ->
         atomic_list_concat(Vivos, ', ', VivosStr),
-        format(atom(R), 'Los personajes que sobrevivieron son: ~w.', [VivosStr])
+        format(atom(R), 'Los personajes que sobrevivieron son ~w, mis guerreros y uno que otro colado.', [VivosStr])
     ;
-        format(atom(R), 'No se encontraron personajes que hayan sobrevivido.')
+        format(atom(R), 'No existieron sobrevivientes.')
     ), !.
                                           
-    
-        
- 
-    
-%   RESPUESTAS ARBOL DE DATOS   %
-
-
-% Formatear respuesta personalizada
-format_response(Category, Person, Results, R) :-
-    ( Results \= [] ->
-        atomic_list_concat(Results, ', ', ResultsStr),
-        format(atom(R), 'Claro, los ~w de ~w son: ~w.', [Category, Person, ResultsStr])
+replace0([I|_], Input, _, [flag_enemigos | _], R) :-
+    nth0(I, Input, Personaje),
+    findall(EnemigoNombre, (enemigo(Personaje, Enemigo), nombre(Enemigo, EnemigoNombre)), Enemigos),
+    nombre(Personaje, NombrePersonaje),
+    (Enemigos \= [] ->
+        atomic_list_concat(Enemigos, ', ', EnemigosStr),
+        format(atom(R), 'Los enemigos de ~w son ~w.', [NombrePersonaje, EnemigosStr])
     ;
-        format(atom(R), 'Lo siento, no encontre ~w para ~w.', [Category, Person])
-    ).
+        format(atom(R), '~w no tiene enemigos, aun.', [NombrePersonaje])
+    ), !.
+    
+replace0(_, _, _, [flag_ganadores | _], R) :-
+    findall(Nombre, (participacion(Personaje, _, vencedor), nombre(Personaje, Nombre)), GanadoresMasculinos),
+    findall(Nombre, (participacion(Personaje, _, vencedora), nombre(Personaje, Nombre)), GanadoresFemeninos),
+    append(GanadoresMasculinos, GanadoresFemeninos, Ganadores),
+    (Ganadores \= [] ->
+        atomic_list_concat(Ganadores, ', ', GanadoresStr),
+        format(atom(R), 'Los vencedores de los Juegos del Hambre son ~w.', [GanadoresStr])
+    ;
+        format(atom(R), 'No hay vencedores en estos juegos, Suzanne aun no nos da nombres.')
+    ), !.
+  
+replace0([I|_], Input, _, [flag_mismo_distrito | _], R) :-
+    nth0(I, Input, Personaje),
+    distrito_pertenece(Personaje, Distrito),
+    findall(OtroNombre, (distrito_pertenece(Otro, Distrito), Otro \= Personaje, nombre(Otro, OtroNombre)), Resultados),
+    nombre(Personaje, NombrePersonaje),
+    (Resultados \= [] ->
+        atomic_list_concat(Resultados, ', ', ResultadosStr),
+        format(atom(R), 'Los personajes del mismo distrito que ~w son ~w.', [NombrePersonaje, ResultadosStr])
+    ;
+        format(atom(R), 'No hay otros personajes en el mismo distrito que ~w.', [NombrePersonaje])
+    ), !.
+        
+replace0([I|_], Input, _, [flag_habilidades_similares | _], R) :-
+    nth0(I, Input, Personaje),
+    habilidad(Personaje, Habilidad),
+    findall(OtroNombre, (habilidad(Otro, Habilidad), Otro \= Personaje, nombre(Otro, OtroNombre)), Similares),
+    nombre(Personaje, NombrePersonaje),
+    (Similares \= [] ->
+        atomic_list_concat(Similares, ', ', SimilaresStr),
+        format(atom(R), 'Los personajes con habilidades similares a ~w son ~w.', [NombrePersonaje, SimilaresStr])
+    ;
+        format(atom(R), 'No hay personajes con habilidades similares a ~w.', [NombrePersonaje])
+    ), !.
 
+replace0([I|_], Input, _, [flag_sobrevivientes_juegos | _], R) :-
+    nth0(I, Input, JuegosAtom),
+    atom_number(JuegosAtom, NumeroJuegos),
+    findall(Nombre, (participacion(Personaje, NumeroJuegos, Resultado), (Resultado = vencedor; Resultado = vencedora; Resultado = sobreviviente), nombre(Personaje, Nombre)), Sobrevivientes),
+    (Sobrevivientes \= [] ->
+        atomic_list_concat(Sobrevivientes, ', ', SobrevivientesStr),
+        format(atom(R), 'Los sobrevivientes de los Juegos del Hambre numero ~w son ~w.', [NumeroJuegos, SobrevivientesStr])
+    ;
+        format(atom(R), 'No se encontraron sobrevivientes en los Juegos numero ~w.', [NumeroJuegos])
+    ), !.
+          
+replace0([I1, I2 | _], Input, _, Resp, R) :-
+    Resp = [flag_mismo_distrito_dos | _],  
+    nth0(I1, Input, Personaje1Atom),       
+    nth0(I2, Input, Personaje2Atom),       
+    distrito_pertenece(Personaje1Atom, Distrito1),  
+    distrito_pertenece(Personaje2Atom, Distrito2),  
+    nombre(Personaje1Atom, Nombre1),
+    nombre(Personaje2Atom, Nombre2), 
+    (Distrito1 == Distrito2 ->
+        format(atom(R), 'Si, ~w y ~w pertenecen al Distrito ~w.', [Nombre1, Nombre2, Distrito1])
+    ;
+        format(atom(R), 'No, ~w y ~w no pertenecen al mismo distrito. ~w es del Distrito ~w y ~w es del Distrito ~w.', 
+            [Nombre1, Nombre2, Nombre1, Distrito1, Nombre2, Distrito2])
+    ), !.
+
+replace0([I1, I2 | _], Input, _, Resp, R) :-
+    Resp = [flag_son_aliados | _],        
+    nth0(I1, Input, Personaje1Atom),      
+    nth0(I2, Input, Personaje2Atom),      
+    nombre(Personaje1Atom, Nombre1),      
+    nombre(Personaje2Atom, Nombre2),      
+    (aliado(Personaje1Atom, Personaje2Atom) ; aliado(Personaje2Atom, Personaje1Atom) ->
+        format(atom(R), 'Si, ~w y ~w son aliados.', [Nombre1, Nombre2])
+    ;
+        format(atom(R), 'No, ~w y ~w no son aliados.', [Nombre1, Nombre2])
+    ), !.
+        
+        
+replace0([I1, I2 | _], Input, _, Resp, R) :-
+    Resp = [flag_son_enemigos | _],       
+    nth0(I1, Input, Personaje1Atom),       
+    nth0(I2, Input, Personaje2Atom),       
+    nombre(Personaje1Atom, Nombre1),       
+    nombre(Personaje2Atom, Nombre2),      
+    (enemigo(Personaje1Atom, Personaje2Atom) ; enemigo(Personaje2Atom, Personaje1Atom) ->
+        format(atom(R), 'Si, ~w y ~w son enemigos.', [Nombre1, Nombre2])
+    ;
+        format(atom(R), 'No, ~w y ~w no son enemigos.', [Nombre1, Nombre2])
+), !.
+            
+replace0([I|_], Input, _, [flag_mentor | _], R) :-
+    nth0(I, Input, Personaje),
+    mentor(Mentor, Personaje),
+    nombre(Personaje, NombrePersonaje),
+    nombre(Mentor, NombreMentor),
+    format(atom(R), 'El mentor de ~w es ~w.', [NombrePersonaje, NombreMentor]), !.
+    
+replace0([I|_], Input, _, [flag_mentor | _], R) :-
+    nth0(I, Input, Personaje),
+    nombre(Personaje, NombrePersonaje),
+    format(atom(R), ' ~w no tiene un mentor conocido.', [NombrePersonaje]), !.
+
+format_participaciones([], '').
+format_participaciones([[Juegos, Resultado] | Resto], Str) :- 
+    format(atom(Primera), ' numero ~w donde fue ~w', [Juegos, Resultado]),
+    format_participaciones(Resto, RestoStr),
+    (RestoStr = '' ->
+        Str = Primera
+    ;
+        atom_concat(Primera, ', ', Temp),
+        atom_concat(Temp, RestoStr, Str)
+    ).    
+
+%   RESPUESTAS ARBOL DE DATOS   %
 
 % Lectura de línea como lista
 read_line_as_list(Input) :-
@@ -388,6 +707,7 @@ esposo(alejandroM, edith).
 esposo(jorge, teresa).
 esposo(alejandro,edithM).
 esposo(raul,maricruz).
+
 esposa(edithM, alejandro).
 esposa(maricruz,raul).
 esposa(edith,alejandroM).
@@ -417,7 +737,12 @@ personaje(clove).
 personaje(cato).
 personaje(gale).
 personaje(glimmer).
-
+personaje(annie_cresta).
+personaje(thresh).
+personaje(madge).
+personaje(delly).
+personaje(brutus).
+personaje(enobaria).
 
 distrito(1).
 distrito(2).
@@ -431,13 +756,14 @@ distrito(9).
 distrito(10).
 distrito(11).
 distrito(12).
+distrito(13).
 distrito(capitolio).
 
 nombre(katniss, 'Katniss Everdeen').
 nombre(peeta, 'Peeta Mellark').
 nombre(finnick, 'Finnick Odair').
 nombre(johanna, 'Johanna Mason').
-nombre(snow, 'Presidente Snow/ Coriolanus Snow').
+nombre(snow, 'Presidente Snow').
 nombre(lucy_gray, 'Lucy Gray Baird').
 nombre(haymitch, 'Haymitch Abernathy').
 nombre(rue, 'Rue').
@@ -451,10 +777,16 @@ nombre(sejanus, 'Sejanus Plinth').
 nombre(tigris, 'Tigris').
 nombre(caesar_flickerman, 'Caesar Flickerman').
 nombre(foxface, 'Foxface').
-nombre(clove,'Clove').
-nombre(cato,'Cato').
-nombre(gale,'Gale').
-nombre(glimmer,'Glimmer').
+nombre(clove, 'Clove').
+nombre(cato, 'Cato').
+nombre(gale, 'Gale Hawthorne').
+nombre(glimmer, 'Glimmer').
+nombre(annie_cresta, 'Annie Cresta').
+nombre(thresh, 'Thresh').
+nombre(madge, 'Madge Undersee').
+nombre(delly, 'Delly Cartwright').
+nombre(brutus, 'Brutus').
+nombre(enobaria, 'Enobaria').
 
 especialidad_distrito(1, 'productos de lujo').
 especialidad_distrito(2, 'armamento y fuerzas militares').
@@ -468,8 +800,8 @@ especialidad_distrito(9, 'granos y agricultura').
 especialidad_distrito(10, 'ganaderia').
 especialidad_distrito(11, 'agricultura').
 especialidad_distrito(12, 'mineria de carbon').
-especialidad_distrito(13, 'armamento nuclear y gobierno subterraneo').
-especialidad_distrito(capitolio, 'entretenimiento').
+especialidad_distrito(13, 'armamento nuclear').
+especialidad_distrito(capitolio, 'politica y entretenimiento').
 
 distrito_pertenece(katniss, 12).
 distrito_pertenece(peeta, 12).
@@ -488,117 +820,153 @@ distrito_pertenece(prim, 12).
 distrito_pertenece(sejanus, capitolio).
 distrito_pertenece(tigris, capitolio).
 distrito_pertenece(caesar_flickerman, capitolio).
-distrito_pertenece(foxface,5).
-distrito_pertenece(clove,2).
-distrito_pertenece(cato,2).
-distrito_pertenece(glimmer,1).
+distrito_pertenece(foxface, 5).
+distrito_pertenece(clove, 2).
+distrito_pertenece(cato, 2).
+distrito_pertenece(glimmer, 1).
+distrito_pertenece(gale, 12).
+distrito_pertenece(annie_cresta, 4).
+distrito_pertenece(thresh, 11).
+distrito_pertenece(madge, 12).
+distrito_pertenece(delly, 12).
+distrito_pertenece(brutus, 2).
+distrito_pertenece(enobaria, 2).
 
-habilidad(katniss, 'arco y flecha').
-habilidad(peeta, camuflaje).
-habilidad(finnick, tridente).
-habilidad(johanna, sigilo).
-habilidad(haymitch, estrategia).
-habilidad(rue, sigilo).
+habilidad(katniss, 'arco').
+habilidad(peeta, 'camuflaje').
+habilidad(finnick, 'tridente').
+habilidad(johanna, 'sigilo').
+habilidad(haymitch, 'estrategia').
+habilidad(rue, 'sigilo').
 habilidad(beetee, 'ingenieria electrica').
-habilidad(mags, pesca).
-habilidad(coriolanus_snow, manipulacion).
-habilidad(coin,manipulacion).
-habilidad(gale, caza).
-habilidad(prim, medicina).
-habilidad(foxface, sigilo).
-habilidad(clove, cuchillos).
-habilidad(cato, combate).
-habilidad(glimmer, carisma).
-
+habilidad(mags, 'supervivencia').
+habilidad(coin, 'manipulacion').
+habilidad(gale, 'caza').
+habilidad(prim, 'medicina').
+habilidad(foxface, 'Sigilo').
+habilidad(clove, 'lanzamiento de cuchillos').
+habilidad(cato, 'Combate').
+habilidad(glimmer, 'arco').
+habilidad(annie_cresta, 'supervivencia').
+habilidad(thresh, 'Combate').
+habilidad(madge, 'observacion').
+habilidad(delly, 'lealtad').
+habilidad(brutus, 'combate').
+habilidad(enobaria, 'combate').
 
 estado(katniss, viva).
 estado(peeta, vivo).
 estado(finnick, muerto).
 estado(johanna, viva).
-estado(rue, muerta).
-estado(haymitch, vivo).
-estado(mags, muerta).
-estado(coriolanus_snow, muerto).
+estado(snow, muerto).
 estado(lucy_gray, desconocido).
-estado(gale, vivo).
+estado(haymitch, vivo).
+estado(rue, muerta).
+estado(cinna, desconocido).
+estado(effie, viva).
+estado(beetee, vivo).
+estado(mags, muerta).
+estado(coin, muerta).
 estado(prim, muerta).
+estado(coriolanus_snow, muerto).
+estado(sejanus, muerto).
+estado(tigris, viva).
+estado(caesar_flickerman, desconocido).
 estado(foxface, muerta).
 estado(clove, muerta).
 estado(cato, muerto).
+estado(gale, vivo).
 estado(glimmer, muerta).
-estado(beetee,vivo).
-estado()
-
-personaje(katniss,viva).
-personaje(peeta,vivo).
-personaje(finnick,vivo).
-personaje(johanna,viva).
-personaje(snow,muerto).
-personaje(lucy_gray,desconocido).
-personaje(haymitch,vivo).
-personaje(rue,muerta).
-personaje(cinna,desconocido).
-personaje(effie,viva).
-personaje(beetee,vivo).
-personaje(mags,muerta).
-personaje(coin,muerta).
-personaje(prim,muerta).
-personaje(sejanus,muerto).
-personaje(tigris,viva).
-personaje(caesar_flickerman,desconocido).
-personaje(foxface,muerta).
-personaje(clove,muerta).
-personaje(cato,muerto).
-personaje(gale,vivo).
-personaje(glimmer,muerta).
+estado(annie_cresta, viva).
+estado(thresh, muerto).
+estado(madge, muerta).
+estado(delly, viva).
+estado(brutus, muerto).
+estado(enobaria, viva).
 
 participacion(katniss, 74, vencedora).
+participacion(katniss, 75, sobreviviente).
 participacion(peeta, 74, vencedor).
+participacion(peeta, 75, sobreviviente).
 participacion(finnick, 65, vencedor).
+participacion(finnick, 75, sobreviviente).
 participacion(johanna, 71, vencedora).
+participacion(johanna, 75, sobreviviente).
 participacion(rue, 74, asesinada).
 participacion(haymitch, 50, vencedor).
 participacion(mags, 11, vencedora).
+participacion(mags, 75, asesinada).
 participacion(lucy_gray, 10, vencedora).
 participacion(clove, 74, muerta).
-participacion(cato, 74, finalista).
+participacion(cato, 74, muerto).
 participacion(foxface, 74, muerta).
 participacion(glimmer, 74, muerta).
-
+participacion(annie_cresta, 70, vencedora).
+participacion(thresh, 74, muerto).
+participacion(brutus, 75, muerto).
+participacion(enobaria, 62, vencedora).
+participacion(enobaria, 75, sobreviviente).
+participacion(beete, 75, sobreviviente).
 
 aliado(katniss, peeta).
 aliado(katniss, rue).
-aliado(katniss,finnick).
-aliado(katniss,johanna).
+aliado(katniss, finnick).
+aliado(katniss, johanna).
 aliado(katniss, haymitch).
-aliado(katniss,mags).
-aliado(katniss,effie).
-aliado(katniss,cinna).
-aliado(katniss,beetee).
-aliado(beetee, finnick).
-aliado(beetee, johanna).
+aliado(katniss, mags).
+aliado(katniss, effie).
+aliado(katniss, cinna).
+aliado(katniss, beetee).
+aliado(katniss, gale).
+aliado(katniss, prim).
+aliado(katniss, annie_cresta).
 aliado(peeta, katniss).
 aliado(peeta, haymitch).
 aliado(peeta, finnick).
-aliado(peeta,johanna).
-aliado(peeta,haymitch).
-aliado(peeta,effie).
-aliado(peeta,beetee).
-aliado(haymitch, effie).
-aliado(glimmer, cato).
-aliado(clove, cato).
+aliado(peeta, johanna).
+aliado(peeta, effie).
+aliado(peeta, beetee).
 aliado(finnick, katniss).
 aliado(finnick, peeta).
 aliado(finnick, mags).
 aliado(finnick, johanna).
 aliado(finnick, haymitch).
-aliado(finnick,beetee).
-aliado(johanna, beetee).
+aliado(finnick, beetee).
+aliado(finnick, annie_cresta).
 aliado(johanna, katniss).
-aliado(johanna,peeta).
-aliado(johanna,finnick).
-aliado(lucy_gray, snow).
+aliado(johanna, peeta).
+aliado(johanna, finnick).
+aliado(johanna, beetee).
+aliado(beetee, finnick).
+aliado(beetee, johanna).
+aliado(beetee, katniss).
+aliado(beetee, peeta).
+aliado(haymitch, effie).
+aliado(haymitch, katniss).
+aliado(haymitch, peeta).
+aliado(annie_cresta, finnick).
+aliado(annie_cresta, katniss).
+aliado(rue,thresh).
+aliado(rue, katniss).
+aliado(thresh, rue).
+aliado(glimmer, cato).
+aliado(clove, cato).
 
+enemigo(katniss, snow).
+enemigo(katniss, coin).
+enemigo(katniss, cato).
+enemigo(katniss, clove).
+enemigo(katniss, glimmer).
+enemigo(peeta, cato).
+enemigo(peeta, clove).
+enemigo(finnick, snow).
+enemigo(haymitch, snow).
+enemigo(johanna, snow).
+
+mentor(haymitch, katniss).
+mentor(haymitch, peeta).
+mentor(mags, finnick).
+mentor(finnick, annie_cresta).
 %ARBOL DE DATOS%
 
 % REGLAS FAMILIA%
@@ -606,9 +974,9 @@ abuelos_paternos(X, Y) :- padrede(P, Y), padrede(X, P); (padrede(P, Y), madrede(
 
 abuelos_maternos(X, Y) :- madrede(M, Y), padrede(X, M); (madrede(M, Y), madrede(X, M)).
 
-abuelo(X, Y) :- abuelo_paterno(X, Y); abuelo_materno(X, Y).
+abuelo(X, Y) :- (padrede(P, Y), padrede(X, P)); (madrede(M, Y), padrede(X, M)).
 
-abuela(X, Y) :- abuela_paterna(X, Y); abuela_materna(X, Y).
+abuela(X, Y) :- (madrede(M, Y), padrede(X, M)); (madrede(M, Y), madrede(X, M)).
 
 abuelos(X, Y) :- (padrede(X, Z), padrede(Z, Y)); (padrede(X, Z), madrede(Z, Y)); (madrede(X, Z), padrede(Z, Y));  (madrede(X, Z), madrede(Z, Y)).  
 
@@ -626,6 +994,33 @@ primos(X, Y) :- padrede(P1, X), hermanos(P1, P2), padrede(P2, Y); madrede(M1, X)
 
 % REGLAS FAMILIA%   
 
-% REGLAS ARBOL DE DATOS%
+%DATOS DADOS POR EL PROFE%
+% Lo que le gusta a eliza : flagLike
+elizaLikes(X, R):- likes(X), R = ['Yeah', i, like, X].
+elizaLikes(X, R):- \+likes(X), R = ['Nope', i, do, not, like, X].
+likes(apples).
+likes(ponies).
+likes(zombies).
+likes(manzanas).
+likes(computadoras).
+like(carros).
 
-personajes_muertos(Lista) :- findall(Personaje, (estado(Personaje, muerto)), Lista).
+
+
+% lo que hace eliza: flagDo
+elizaDoes(X, R):- does(X), R = ['Yes', i, X, and, i, love, it].
+elizaDoes(X, R):- \+does(X), R = ['No', i, do, not, X ,'.', it, is, too, hard, for, me].
+does(study).
+does(cook).
+does(work).
+
+% lo que es eliza: flagIs
+elizaIs(X, R):- is0(X), R = ['Yes', yo, soy, X].
+elizaIs(X, R):- \+is0(X), R = ['No', i, am, not, X].
+is0(dumb).
+is0(weird).
+is0(nice).
+is0(fine).
+is0(happy).
+is0(redundant).
+%DATOS DADOS POR EL PROFE%
