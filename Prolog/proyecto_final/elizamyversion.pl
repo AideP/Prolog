@@ -76,7 +76,7 @@ template([mi, personaje, favorito, de, greys, anatomy, es, s(_), '.'], ['Genial!
 template([s(_), es, el, mejor, doctor, en, greys, anatomy, '!'], [estoy, de, acuerdo, 0, salva, muchas, vidas, '!'], [0]).
 template([mi, pareja, favorita, de, greys, anatomy, es, s(_), y, s(_), '.'], [amo, a, 0, y, a, 1, '¿', cual, es, tu, capitulo, favorito, con, ellos, '?'], [7, 9]).
 template([s(_), tuvo, un, gran, desarrollo, en, greys, anatomy, '.'], [es, verdad, 0, tuvo, momentos, increibles, '.'], [0]).
-template([extraño, a, s(_), en, greys, anatomy, '.'], [si, 0, fue, un, gran, personaje, y, nos, dejo, buenos, momentos, '.'], [2]).
+template([extrano, a, s(_), en, greys, anatomy, '.'], [si, 0, fue, un, gran, personaje, y, nos, dejo, buenos, momentos, '.'], [2]).
 
 
 
@@ -105,6 +105,13 @@ template([eliza, dime, si, s(_), es, esposo, de, s(_)], [flag_esposo_de], [3, 7]
 template([eliza, dime,si, s(_), es, esposa, de, s(_)], [flag_esposa_de], [3, 7]).
 
 %         FAMILIA     %
+%       MEDICOS         %
+template([resuelve, el, problema, de, los, medicos], [flagResolveProblem], [5]).
+template([cual, es, la, especialidad, de, s(_)], [flagFindEspecialidadMedico], [5]).
+template([cual, es, el, hospital, de, s(_)], [flagFindHospitalMedico], [5]).
+template([cual, es, el, equipo, medico, de, s(_)], [flagFindEquipoMedico], [6]).
+template([cual, es, el, interes, de, investigacion, de, s(_)], [flagFindInteresInvestigacion], [7]).
+%       MEDICOS         %
 
 %       ARBOL DE DATOS         %
 template([eliza, que, especialidad, tiene, el, distrito, s(_)], [flag_especialidad_distrito], [6]).
@@ -130,7 +137,6 @@ template([eliza, s(_), y, s(_), son, aliados, '?'], [flag_son_aliados], [1, 3]).
 template([eliza, s(_), y, s(_), son, enemigos, '?'], [flag_son_enemigos], [1, 3]).
 
 %       ARBOL DE DATOS         %
-
 
 % Coincidencias
 match([], []).
@@ -385,7 +391,44 @@ replace0([I, J | _], Input, _, Resp, R) :-
     ), !.
 
 % Esposos %         
-            
+%   RESPUESTAS MEDICOS          %
+replace0([I|_], Input, _, Resp, R):- 
+    nth0(I, Input, Atom),
+    nth0(0, Resp, X),   
+    X == flagResolveProblem,
+    elizaResolveProblem(R).
+
+replace0([I|_], Input, _, Resp, R):- 
+    nth0(I, Input, Nombre),  
+    nth0(0, Resp, X), 
+    X == flagFindHospitalMedico,  
+    resolver(Resultado),          
+    (member([Nombre, _, Hospital, _, _], Resultado) -> 
+        R = ['El hospital de', Nombre, 'es', Hospital]
+    ;
+        R = ['Lo siento, no encontre informacion para el medico llamado', Nombre]).
+
+replace0([I|_], Input, _, Resp, R):- 
+    nth0(I, Input, Nombre),  
+    nth0(0, Resp, X), 
+    X == flagFindEspecialidadMedico,  
+    resolver(Resultado),             
+    (member([Nombre, Especialidad, _, _, _], Resultado) -> 
+        R = ['La especialidad de', Nombre, 'es', Especialidad]
+    ;   
+        R = ['Lo siento, no encontre informacion sobre', Nombre]).
+
+replace0([I|_], Input, _, Resp, R):- 
+    nth0(I, Input, Nombre),
+    nth0(0, Resp, X),
+    X == flagFindHospitalMedico, 
+    resolver(Resultado),              
+    (member([Nombre, _, Hospital, _, _], Resultado) -> 
+        R = ['El hospital de', Nombre, 'es', Hospital]
+    ;   
+        R = ['Lo siento, no encontre informacion sobre', Nombre]).
+
+% Encuentra el equipo medico del medico         
 
 %   RESPUESTAS ARBOL DE DATOS   %
 replace0([I|_], Input, _, Resp, R) :-
@@ -607,6 +650,29 @@ replace0([I|_], Input, _, [flag_mentor | _], R) :-
     nombre(Personaje, NombrePersonaje),
     format(atom(R), ' ~w no tiene un mentor conocido.', [NombrePersonaje]), !.
 
+%   RESPUESTAS ARBOL DE DATOS   %
+
+replace0([I|_], Input, _, Resp, R):- 
+    nth0(I, Input, Nombre),
+    nth0(0, Resp, X), 
+    X == flagFindEquipoMedico, 
+    resolver(Resultado),              
+    (member([Nombre, _, _, Equipo, _], Resultado) -> 
+        R = ['El equipo medico de', Nombre, 'es', Equipo]
+    ;   
+        R = ['Lo siento, no encontre informacion sobre', Nombre]).
+
+replace0([I|_], Input, _, Resp, R):- 
+    nth0(I, Input, Nombre),
+    nth0(0, Resp, X), 
+    X == flagFindInteresInvestigacion, 
+    resolver(Resultado),              
+    (member([Nombre, _, _, _, Interes], Resultado) -> 
+        R = ['El interes de investigacion de', Nombre, 'es', Interes]
+    ;   
+        R = ['Lo siento, no encontre informacion sobre', Nombre]).
+%   RESPUESTAS MEDICOS          %
+
 format_participaciones([], '').
 format_participaciones([[Juegos, Resultado] | Resto], Str) :- 
     format(atom(Primera), ' numero ~w donde fue ~w', [Juegos, Resultado]),
@@ -618,7 +684,15 @@ format_participaciones([[Juegos, Resultado] | Resto], Str) :-
         atom_concat(Temp, RestoStr, Str)
     ).    
 
-%   RESPUESTAS ARBOL DE DATOS   %
+
+    find_specialty(Nombre, R) :-
+        resolver(Resultado),
+        (member([Nombre, Especialidad, _, _, _], Resultado) ->
+            format(atom(R), 'La especialidad del doctor ~w es ~w.', [Nombre, Especialidad])
+        ;
+            format(atom(R), 'No encontre informacion sobre el doctor ~w.', [Nombre])
+        ).
+
 
 % Lectura de línea como lista
 read_line_as_list(Input) :-
@@ -969,6 +1043,67 @@ mentor(mags, finnick).
 mentor(finnick, annie_cresta).
 %ARBOL DE DATOS%
 
+%   MEDICOS    %
+doctores([ana, bruno, carla, diego, elena]).
+especialidades([cardiologia, neurologia, oncologia, pediatria, dermatologia]).
+hospitales([general, regional, universitario, privado, militar]).
+equipos([ecografo, resonancia, tomografo, dermatoscopio, electrocardiografo]).
+intereses([genetica, farmacologia, inmunologia, bioetica, microbiologia]).
+
+permutacion([], []).
+permutacion(Lista, [Elemento|PermutacionResto]) :-
+    select(Elemento, Lista, ListaSinElemento),
+    permutacion(ListaSinElemento, PermutacionResto).
+
+% Solución del problema
+resolver(Resultado) :-
+    Resultado = [
+        [ana, EspecialidadAna, HospitalAna, EquipoAna, InteresAna],
+        [bruno, EspecialidadBruno, HospitalBruno, EquipoBruno, InteresBruno],
+        [carla, EspecialidadCarla, HospitalCarla, EquipoCarla, InteresCarla],
+        [diego, EspecialidadDiego, HospitalDiego, EquipoDiego, InteresDiego],
+        [elena, EspecialidadElena, HospitalElena, EquipoElena, InteresElena]
+    ],
+
+    % Restricciones básicas
+    especialidades(Especialidades), permutacion(Especialidades, [EspecialidadAna, EspecialidadBruno, EspecialidadCarla, EspecialidadDiego, EspecialidadElena]),
+    hospitales(Hospitales), permutacion(Hospitales, [HospitalAna, HospitalBruno, HospitalCarla, HospitalDiego, HospitalElena]),
+    equipos(Equipos), permutacion(Equipos, [EquipoAna, EquipoBruno, EquipoCarla, EquipoDiego, EquipoElena]),
+    intereses(Intereses), permutacion(Intereses, [InteresAna, InteresBruno, InteresCarla, InteresDiego, InteresElena]),
+
+
+    % 1. Carla no trabaja en el Hospital General ni en el Privado, y no estudia neurología.
+    HospitalCarla \= general, HospitalCarla \= privado, EspecialidadCarla \= neurologia,
+
+    % 2. La persona que utiliza el electrocardiógrafo trabaja en cardiología en el Hospital Militar, pero no es Diego.
+    member([_, cardiologia, militar, electrocardiografo, _], Resultado),
+    not(member([diego, cardiologia, militar, electrocardiografo, _], Resultado)),
+
+    % 3. Bruno está interesado en farmacología, pero no trabaja en el Hospital Regional ni en el Militar.
+    InteresBruno = farmacologia, HospitalBruno \= regional, HospitalBruno \= militar,
+
+    % 4. La persona que utiliza el ecógrafo trabaja en pediatría y no es del Hospital Universitario ni del Militar.
+    member([_, pediatria, HospitalPediatria, ecografo, _], Resultado), HospitalPediatria \= universitario, HospitalPediatria \= militar,
+
+    % 5. El especialista en oncología trabaja en el Hospital General y utiliza un tomógrafo.
+    member([_, oncologia, general, tomografo, _], Resultado),
+
+    % 6. El médico interesado en inmunología usa el resonador magnético, pero no es Elena.
+    member([_, _, _, resonancia, inmunologia], Resultado), not(member([elena, _, _, resonancia, inmunologia], Resultado)),
+
+    % 7. El médico del Hospital Regional se dedica a dermatología.
+    member([_, dermatologia, regional, _, _], Resultado),
+
+    % 8. Elena está interesada en bioética y no utiliza el electrocardiógrafo.
+    InteresElena = bioetica, EquipoElena \= electrocardiografo,
+
+    % 9. Diego es el experto en microbiología.
+    InteresDiego = microbiologia,
+
+    % 10. El médico del Hospital Universitario utiliza un dermatoscopio.
+    member([_, _, universitario, dermatoscopio, _], Resultado).
+%   MEDICOS    %
+
 % REGLAS FAMILIA%
 abuelos_paternos(X, Y) :- padrede(P, Y), padrede(X, P); (padrede(P, Y), madrede(X, P)). 
 
@@ -993,6 +1128,29 @@ cunado(X, Y) :- hermanos(X, Z), (esposa(Z, Y); esposo(Z, Y)); esposo(X, Z), herm
 primos(X, Y) :- padrede(P1, X), hermanos(P1, P2), padrede(P2, Y); madrede(M1, X), hermanos(M1, M2), madrede(M2, Y); padrede(P, X), madrede(M1, Y), hermanos(P, M1); madrede(M, X), padrede(P1, Y), hermanos(M, P1).
 
 % REGLAS FAMILIA%   
+
+%   MEDICOS       %
+permute([], []).
+permute(Lista, [Elemento | RestoPerm]) :-
+    select(Elemento, Lista, NuevaLista),
+    permute(NuevaLista, RestoPerm).
+
+resolver(Resultado) :-
+        Resultado = [
+            [ana, EspecialidadAna, HospitalAna, EquipoAna, InteresAna],
+            [bruno, EspecialidadBruno, HospitalBruno, EquipoBruno, InteresBruno],
+            [carla, EspecialidadCarla, HospitalCarla, EquipoCarla, InteresCarla],
+            [diego, EspecialidadDiego, HospitalDiego, EquipoDiego, InteresDiego],
+            [elena, EspecialidadElena, HospitalElena, EquipoElena, InteresElena]
+        ],
+
+  % combinaciones
+  especialidades(Esp), permute(Esp, [EspecialidadAna, EspecialidadBruno, EspecialidadCarla, EspecialidadDiego, EspecialidadElena]),
+  hospitales(Hosp), permute(Hosp, [HospitalAna, HospitalBruno, HospitalCarla, HospitalDiego, HospitalElena]),
+  equipos(Eqp), permute(Eqp, [EquipoAna, EquipoBruno, EquipoCarla, EquipoDiego, EquipoElena]),
+  intereses(Int), permute(Int, [InteresAna, InteresBruno, InteresCarla, InteresDiego, InteresElena]),
+
+%   MEDICOS       %
 
 %DATOS DADOS POR EL PROFE%
 % Lo que le gusta a eliza : flagLike
